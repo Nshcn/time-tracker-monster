@@ -14,60 +14,11 @@ class UI {
         document.getElementById('labelForTimeInterval').classList.add('hide');
         this.setUIForDonutChart();
 
-        // document.getElementById('hatch').classList.remove('active');
-
         this.clearUI();
     }
 
-    // setUIForAll() {
-    //     document.getElementById('btnHatch').classList.add('active');
-    //     document.getElementById('btnToday').classList.remove('active');
-    //     document.getElementById('btnByDays').classList.remove('active');
-    //     document.getElementById('blockForChartBtn').classList.add('hide');
-    //     document.getElementById('stats').classList.remove('hide');
-    //     document.getElementById('labelForTimeInterval').classList.add('hide');
-
-    //     this.clearUI();
-    // }
-    
     // 设置孵蛋页面
     setUIForHatch() {
-        // document.getElementById('btnHatch').classList.add('active');
-        // document.getElementById('btnToday').classList.remove('active');
-        // document.getElementById('btnByDays').classList.remove('active');
-
-        // document.getElementById('blockForChartBtn').classList.add('hide');
-        // document.getElementById('stats').classList.add('hide');
-        // document.getElementById('labelForTimeInterval').classList.add('hide');
-        // // this.setUIForHatchPage();
-        // this.clearUI();
-        // // document.getElementById('hatchPanel').classList.add('active-panel');
-
-        // var div = document.getElementById('byDays');
-        // var barChart = document.createElement('div');
-        // barChart.id = 'barChart';
-
-        // var from = this.createElement('span', null, 'From');
-        // var to = this.createElement('span', null, 'To');
-
-        // var calendarFirst = document.createElement('input');
-        // calendarFirst.id = 'dateFrom';
-        // calendarFirst.type = 'date';
-        // var previousDate = new Date();
-        // previousDate.setDate(previousDate.getDate() - getDateFromRange(range));
-        // calendarFirst.valueAsDate = new Date(Date.UTC(previousDate.getFullYear(), previousDate.getMonth(), previousDate.getDate()));
-
-        // var calendarTwo = document.createElement('input');
-        // calendarTwo.id = 'dateTo';
-        // calendarTwo.type = 'date';
-        // calendarTwo.valueAsDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
-
-        // var tableForDaysBlock = document.createElement('div');
-        // tableForDaysBlock.id = 'tableForDaysBlock';
-
-        // div = this.appendChild(div, [barChart, from, calendarFirst, to, calendarTwo]);
-
-        // div.append(tableForDaysBlock);
 
     }
 
@@ -85,25 +36,7 @@ class UI {
 
     clearUI() {
         document.getElementById('statisticTable').innerHTML = null;
-        // document.getElementById('chart').innerHTML = null;
-        // document.getElementById('timeChart').innerHTML = null;
-        // document.getElementById('total').innerHTML = null;
-        // document.getElementById('byDays').innerHTML = null;
     }
-
-    // setUIForDonutChart() {
-    //     document.getElementById('donutChartBtn').classList.add('active');
-    //     document.getElementById('heatMapChartBtn').classList.remove('active');
-    //     document.getElementById('timeChart').innerHTML = null;
-    //     document.getElementById('labelForTimeInterval').classList.add('hide');
-    // }
-
-    // setUIForTimeChart() {
-    //     document.getElementById('donutChartBtn').classList.remove('active');
-    //     document.getElementById('heatMapChartBtn').classList.add('active');
-    //     document.getElementById('chart').innerHTML = null;
-    //     document.getElementById('labelForTimeInterval').classList.remove('hide');
-    // }
 
     createTotalBlock(totalTime, currentTypeOfList, counter) {
         var totalElement = document.getElementById('total');
@@ -151,33 +84,6 @@ class UI {
         }
     }
 
-    drawChart(tabs) {
-        var donut = donutChart()
-            .width(550)
-            .height(230)
-            .cornerRadius(5) // sets how rounded the corners are on each slice
-            .padAngle(0.020) // effectively dictates the gap between slices
-            .variable('percentage')
-            .category('url');
-
-        if (setting_dark_mode)
-            donut.darkMode(true);
-        else donut.darkMode(false);
-
-        d3.select('#chart')
-            .datum(tabs) // bind data to the div
-            .call(donut); // draw chart in div
-    }
-
-    drawTimeChart(tabs) {
-        drawIntervalChart(tabs);
-    }
-
-    drawBarChart(days) {
-        d3.select('#barChart').datum(days);
-        barChart(days);
-    }
-
     addTableHeader(currentTypeOfList, counterOfSite, totalTime, totalDays) {
         function fillSummaryTime(totalTime){
             let arrayTime = getArrayTime(totalTime);
@@ -212,10 +118,6 @@ class UI {
                     item.dispatchEvent(new Event('mouseenter'));
                     item.classList.add('mouse-over');
                 }
-                // else {
-                //     document.getElementById('Others').dispatchEvent(new Event('mouseenter'));
-                //     document.getElementById('Others').classList.add('mouse-over');
-                // }
             }
         });
         div.addEventListener('mouseout', function() {
@@ -224,7 +126,6 @@ class UI {
                 if (item !== null) {
                     item.classList.remove('mouse-over');
                 }
-                // else document.getElementById('Others').classList.remove('mouse-over');
             }
         });
         div.classList.add('inline-flex');
@@ -472,8 +373,6 @@ class UI {
         document.getElementById('pageHatch').classList.remove('active');
         document.getElementById('pageBattle').classList.remove('active');
         document.getElementById('pageSettings').classList.remove('active');
-        // if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
-        //     getTabsFromStorage(tabsFromBackground);
         this.showTodayStatistic();
     }
     showHatchPage() {
@@ -511,17 +410,21 @@ class UI {
         this.showTable();
     }
     showTable() {
-        let counterOfSite = 5;
-        totalTime = 900;
+        let counterOfSite;
         let targetTabs = tabsFromBackground.sort(function (a, b) {
             return b.summaryTime - a.summaryTime;
         });
         if (currentTypeOfList === TypeListEnum.All) {
+            counterOfSite = targetTabs.length;
             ui.addTableHeader(currentTypeOfList, counterOfSite, totalTime, getFirstDay());
             totalTime = getTotalTime(targetTabs);
         }
         
         if (currentTypeOfList === TypeListEnum.ToDay) {
+            targetTabs = targetTabs.sort(function (a, b) {
+                return b.days.find(s => s.date === todayLocalDate()).summary - a.days.find(s => s.date === todayLocalDate()).summary;
+            });
+            counterOfSite = targetTabs.length;
             totalTime = getTotalTime(targetTabs);
             chrome.extension.getBackgroundPage().console.log('showtable totaltime', totalTime);
             chrome.extension.getBackgroundPage().console.log(currentTypeOfList, counterOfSite, totalTime);

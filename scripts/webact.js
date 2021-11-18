@@ -82,53 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // ui.setPreloader();
 
     storage.getValue(SETTINGS_INTERVAL_RANGE, function (item) { setting_range_days = item; });
-    // document.getElementById('btnToday').addEventListener('click', function () {
-    //     currentTypeOfList = TypeListEnum.ToDay;
-    //     ui.setUIForToday();
-    //     getDataFromStorage();
-    // });
-    // document.getElementById('donutChartBtn').addEventListener('click', function () {
-    //     ui.setUIForDonutChart();
-    //     getDataFromStorage();
-    // });
-    // document.getElementById('heatMapChartBtn').addEventListener('click', function () {
-    //     ui.setUIForTimeChart();
-    //     getTimeIntervalList();
-    // });
-    // document.getElementById('btnAll').addEventListener('click', function () {
-    //     currentTypeOfList = TypeListEnum.All;
-    //     ui.setUIForAll();
-    //     getDataFromStorage();
-    // });
     document.getElementById('btnHatch').addEventListener('click', function () {
         // currentTypeOfList = TypeListEnum.All;
         // ui.setUIForAll();
         ui.setUIForHatch();
         // getDataFromStorage();
     });
-    // document.getElementById('btnByDays').addEventListener('click', function () {
-    //     currentTypeOfList = TypeListEnum.ByDays;
-    //     ui.setUIForByDays(setting_range_days);
-    //     getDataFromStorageByDays();
-    // });
-    // document.getElementById('statInActiveDayIcon').addEventListener('click', function () {
-    //     fillBlockWithInActiveDay();
-    // });
-    // document.getElementById('statActiveDayIcon').addEventListener('click', function () {
-    //     fillBlockWithActiveDay();
-    // });
-    // document.getElementById('closeHintBtn').addEventListener('click', function () {
-    //     document.getElementById('hintForUsers').classList.add('hide');
-    //     storage.saveValue(SETTINGS_SHOW_HINT, false);
-    // });
-    // document.getElementById('settings').addEventListener('click', function () {
-    //     if (chrome.runtime.openOptionsPage) {
-    //         chrome.runtime.openOptionsPage();
-    //     } else {
-    //         window.open(chrome.runtime.getURL('options.html'));
-    //     }
-    // });
-
 
     //导航栏按钮
     document.getElementById('btnStatistics').addEventListener('click', function () {
@@ -174,11 +133,6 @@ function firstInitPage() {
         chrome.extension.getBackgroundPage().console.log('init',bg)
         currentTypeOfList = TypeListEnum.ToDay;
         getLimitsListFromStorage();
-        // getDataFromStorage();
-        // storage.getValue(SETTINGS_SHOW_HINT, function (item) {
-        //     if (item)
-        //         document.getElementById('hintForUsers').classList.remove('hide');
-        // });
     });
 }
 
@@ -191,17 +145,6 @@ window.addEventListener('click', function (e) {
 function getLimitsListFromStorage() {
     storage.loadTabs(STORAGE_RESTRICTION_LIST, getLimitsListFromStorageCallback);
 }
-
-// function getDataFromStorage() {
-//     if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
-//         getTabsFromStorage(tabsFromBackground);
-//     else fillEmptyBlock();
-// }
-
-// function getDataFromStorageByDays() {
-//     if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
-//         getTabsByDays(tabsFromBackground);
-// }
 
 function getLimitsListFromStorageCallback(items) {
     if (items !== undefined)
@@ -299,68 +242,10 @@ function getTabsFromStorage(tabs) {
 }
 */
 
-/*
-function getTabsForTimeChart(timeIntervals) {
-    var resultArr = [];
-    if (timeIntervals != undefined) {
-        timeIntervals.forEach(function (data) {
-            if (data.day == todayLocalDate()) {
-                data.intervals.forEach(function (interval) {
-                    resultArr.push({ 'domain': data.domain, 'interval': interval });
-                });
-            }
-        });
-    }
-    return resultArr;
-}
-*/
-/*
-function getTabsForExpander() {
-    if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
-        getTabsFromStorageForExpander(tabsFromBackground);
-}
-*/
 function getTimeIntervalList() {
     storage.getValue(STORAGE_TIMEINTERVAL_LIST, drawTimeChart);
 }
-/*
-function drawTimeChart(items) {
-    ui.drawTimeChart(getTabsForTimeChart(items));
-}
-*/
-/*
-function getTabsFromStorageForExpander(tabs) {
-    tabsFromStorage = tabs;
-    targetTabs = [];
 
-    targetTabs = tabs.sort(function (a, b) {
-        return b.summaryTime - a.summaryTime;
-    });
-
-    var currentTab = getCurrentTab();
-
-    for (var i = 31; i < targetTabs.length; i++) {
-        var summaryTime;
-        var counter;
-        if (currentTypeOfList === TypeListEnum.ToDay) {
-            summaryTime = targetTabs[i].days.find(x => x.date == todayLocalDate()).summary;
-            let item = targetTabs[i].days.find(x => x.date == todayLocalDate());
-            if (item != undefined)
-                counter = item.counter;
-        }
-        if (currentTypeOfList === TypeListEnum.All) {
-            summaryTime = targetTabs[i].summaryTime;
-            counter = targetTabs[i].counter;
-        }
-
-        ui.addLineToTableOfSite(targetTabs[i], currentTab, summaryTime, currentTypeOfList, counter);
-    }
-
-    var table = ui.getTableOfSite();
-    table.removeChild(table.getElementsByTagName('hr')[0]);
-    ui.addHrAfterTableOfSite();
-}
-*/
 function getTotalTime(tabs) {
     var total;
     if (currentTypeOfList === TypeListEnum.ToDay) {
