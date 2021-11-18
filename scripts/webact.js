@@ -59,6 +59,7 @@ function firstInitPage() {
 
         tabsFromBackground = bg.tabs;
         currentTypeOfList = TypeListEnum.ToDay;
+        ui.showAllStatistic();
     });
 }
 

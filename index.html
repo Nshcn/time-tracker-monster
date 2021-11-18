@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <svg class="height-0">
+    <!-- <svg class="height-0">
       <filter id="dropShadow">
          <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
          <feOffset dx="0" dy="1" />
@@ -19,34 +19,34 @@
          </feMerge>
       </filter>
    </svg>
-    <div id="extensionTitle">
-        <p class="title">Web Time Tracker Monster</p>
+-->
+<div class="container">
+    <div class="title">
+        <p>Web Time Tracker Monster</p>
     </div>
-</div>
-<div class="nav">
-    <button id="btnStatistics">统计</button>
-    <button id="btnHatch">孵蛋</button>
-    <button id="btnBattle">战斗</button>
-    <button id="btnSettings">设置</button>
-</div>
-<div class="main">
-    <div id="pageStatistics" class="active">
-        statistics
-        <button id="btnTodayStatistics">TODAY</button>
-        <button id="btnAllStatistics">ALL-TIME</button>
-        <div id="statisticChart" style="width:100%;height:300px">
-            chart
-        </div>
-        <div id="statisticTable">
-            table
-        </div>
+    <div class="main-nav">
+        <div id="btnStatistics">统计</div>
+        <div id="btnHatch">孵蛋</div>
+        <div id="btnBattle">战斗</div>
+        <div id="btnSettings">设置</div>
     </div>
-    <div id="pageHatch">hatch</div>
-    <div id="pageBattle">battle</div>
-    <div id="pageSettings">设置</div>
+    <div class="main">
+        <div id="pageStatistics" class="active">
+            <div id="statisticChart">
+                <div class="chart-nav">
+                    <div id="btnTodayStatistics" class="btn-toggle-chart">TODAY</div>
+                    <div id="btnAllStatistics" class="btn-toggle-chart">ALL-TIME</div>
+                </div>
+                <div id="chart-container" style="width:100%;height:300px"></div>
+            </div>
+            <div id="statisticTable"></div>
+        </div>
+        <div id="pageHatch">hatch</div>
+        <div id="pageBattle">battle</div>
+        <div id="pageSettings">设置</div>
+    </div>
 </div>
 </body>
-
 </html>
 
 <script src="scripts/chart/echarts.min.js"></script>
@@ -56,20 +56,56 @@
 <script src="scripts/webact.js"></script>
 
 <style>
-.nav {
+.container{
+    width: 500px;
+    height:500px;
+}
+.container .title{
+    font-size:14px;
+    font-weight: bold;
+    color: black;
+}
+.main-nav {
     width: 100%;
     height:50px;
+    display: flex;
 }
-.nav button{
-
+.main-nav div{
+    flex: 1;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
 }
 .main{
     width: 100%;
-    height: 300px;
-    border: 1px solid black
+    /* height: 300px; */
+    border: 1px solid blue
 }
 .main>div{
     display: none;
+}
+#statisticChart{
+    display: flex;
+    width: 100%;
+    height: 300px;
+    border: 1px solid yellow;
+    flex-direction: row;
+}
+.chart-nav{
+    flex: 10%;
+    border: 1px solid black;
+    display: flex;
+}
+.btn-toggle-chart{
+    flex: 1;
+}
+#chart-container{
+    flex: 90%;
+}
+.chart-nav{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 .main .active{
     display: block !important;

@@ -46,7 +46,7 @@ class UI {
     addLineToTableOfSite(tab, currentTab, summaryTime, typeOfList, counter, blockName) {
         var div = document.createElement('div');
         div.addEventListener('mouseenter', function() {
-            if (document.getElementById('statisticChart').innerHTML !== '') {
+            if (document.getElementById('chart-container').innerHTML !== '') {
                 var item = document.getElementById(tab.url);
                 if (item !== null) {
                     item.dispatchEvent(new Event('mouseenter'));
@@ -55,7 +55,7 @@ class UI {
             }
         });
         div.addEventListener('mouseout', function() {
-            if (document.getElementById('statisticChart').innerHTML !== '') {
+            if (document.getElementById('chart-container').innerHTML !== '') {
                 var item = document.getElementById(tab.url);
                 if (item !== null) {
                     item.classList.remove('mouse-over');
@@ -106,7 +106,7 @@ class UI {
         }
 
         var spanVisits = this.createElement('span', ['span-visits', 'tooltip', 'visits'], counter !== undefined ? counter : 0);
-        var visitsTooltip = this.createElement('span', ['tooltiptext'], 'Count of visits');
+        var visitsTooltip = this.createElement('span', ['tooltiptext'], '访问次数');
 
         spanVisits.appendChild(visitsTooltip);
         var spanPercentage = this.createElement('span', ['span-percentage'], getPercentage(summaryTime));
@@ -247,13 +247,13 @@ class UI {
         }
         
         if (currentTypeOfList === TypeListEnum.ToDay) {
+            targetTabs = tabsFromBackground.filter(x => x.days.find(s => s.date === todayLocalDate()));
             targetTabs = targetTabs.sort(function (a, b) {
                 return b.days.find(s => s.date === todayLocalDate()).summary - a.days.find(s => s.date === todayLocalDate()).summary;
             });
             counterOfSite = targetTabs.length;
             totalTime = getTotalTime(targetTabs);
             ui.addTableHeader(currentTypeOfList, counterOfSite, totalTime);
-            targetTabs = tabsFromBackground.filter(x => x.days.find(s => s.date === todayLocalDate()));
         }
 
         var currentTab = getCurrentTab();
@@ -300,14 +300,21 @@ class UI {
         this.showTable();
     }
     drawRingChart(data) {
-        var chartDom = document.getElementById('statisticChart');
+        var chartDom = document.getElementById('chart-container');
         var myChart = echarts.init(chartDom);
         var option;
+        let targetTabs = [];
+        if (currentTypeOfList == TypeListEnum.ToDay) {
+            targetTabs = tabsFromBackground.filter(x => x.days.find(s => s.date === todayLocalDate()));
+        } else {
+            targetTabs = tabsFromBackground;
+        }
         option = {
             tooltip: {
                 trigger: 'item'
             },
             legend: {
+                show: targetTabs.length<8,
                 orient: 'vertical',
                 x: 'right',
                 y: 'center',

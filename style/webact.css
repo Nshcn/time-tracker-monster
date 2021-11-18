@@ -78,11 +78,13 @@ body {
 }
 
 .span-percentage {
+    width:60px;
     color: rgb(78, 78, 78);
     font-size: 11px;
 }
 
 .span-time {
+    width: 150px;
     color: #c5c3c3;
     font-weight: 700;
     text-align: right;

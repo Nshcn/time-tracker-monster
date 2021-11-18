@@ -26,7 +26,6 @@ var TypeListEnum = {
     All: 2,
     ByDays: 3,
 };
-
 var STORAGE_TABS = 'tabs';
 var STORAGE_BLACK_LIST = 'black_list';
 var STORAGE_RESTRICTION_LIST = 'restriction_list';

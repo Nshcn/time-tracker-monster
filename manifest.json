@@ -18,10 +18,9 @@
    "manifest_version": 2,
    "minimum_chrome_version": "26",
    "name": "Time Tracker Monster",
-   "short_name": "Web Time Tracker",
-   "version": "1.0.0",
+   "short_name": "Time Tracker Monster",
+   "version": "1.0.1",
    "permissions": [ "tabs", "activeTab", "storage", "idle", "chrome://favicon/*", "webNavigation", "unlimitedStorage" ],
    "offline_enabled": true,
-   "optional_permissions": [ "notifications" ],
    "options_page": "options.html"
 }
