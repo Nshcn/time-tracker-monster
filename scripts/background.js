@@ -338,7 +338,16 @@ function loadBlackList() {
         setting_black_list = items;
     })
 }
-
+function loadGoodList() {
+    storage.getValue('good_list', function(items) {
+        good_list = items;
+    })
+}
+function loadBadList() {
+    storage.getValue('bad_list', function(items) {
+        bad_list = items;
+    })
+}
 
 function loadTimeIntervals() {
     storage.getValue(STORAGE_TIMEINTERVAL_LIST, function(items) {
@@ -385,6 +394,8 @@ function loadAddDataFromStorage() {
     loadTabs();
     loadTimeIntervals();
     loadBlackList();
+    loadGoodList();
+    loadBadList();
     loadCoin();
     loadRestrictionList();
     loadNotificationList();

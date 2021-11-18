@@ -1,5 +1,7 @@
 var storage = new LocalStorage();
 var blackList = [];
+var goodList = [];
+var badList = [];
 var restrictionList = [];
 var notifyList = [];
 var blockBtnList = ['settingsBtn', 'restrictionsBtn', 'notifyBtn', 'aboutBtn', 'donateBtn'];
@@ -40,6 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addBlackSiteBtn').addEventListener('click', function () {
         addNewSiteClickHandler('addBlackSiteLbl', null, actionAddBlackSiteToList, 'notifyForBlackList');
     });
+    // 添加好坏网站
+    document.getElementById('addGoodSiteBtn').addEventListener('click', function () {
+        chrome.extension.getBackgroundPage().console.log('add good site btn')
+        addNewSiteClickHandler('addGoodSiteLbl', null, actionAddGoodSiteToList, 'notifyForBlackList');
+    });
+    document.getElementById('addBadSiteBtn').addEventListener('click', function () {
+        addNewSiteClickHandler('addBadSiteLbl', null, actionAddBadSiteToList, 'notifyForBlackList');
+    });
     document.getElementById('addRestrictionSiteBtn').addEventListener('click', function () {
         addNewSiteClickHandler('addRestrictionSiteLbl', 'addRestrictionTimeLbl', actionAddRectrictionToList, 'notifyForRestrictionList');
     });
@@ -73,8 +83,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('notifyMessage').addEventListener('change', function () {
         updateNotificationMessage();
     });
-    $('.clockpicker').clockpicker();
 
+   
+
+
+    $('.clockpicker').clockpicker();
+    chrome.extension.getBackgroundPage().console.log('dom loaded')
     loadSettings();
 });
 
@@ -94,6 +108,7 @@ function setBlockEvent(btnName, blockName) {
 }
 
 function loadSettings() {
+    chrome.extension.getBackgroundPage().console.log('load settings')
     storage.getValue(SETTINGS_INTERVAL_INACTIVITY, function (item) {
         document.getElementById('intervalInactivity').value = item;
     });
@@ -119,7 +134,19 @@ function loadSettings() {
         if (items !== undefined)
             blackList = items;
         else blackList = [];
-        viewBlackList(items);
+        viewList(items,blackList,'blackList');
+    });
+    storage.getValue('good_list', function (items) {
+        if (items !== undefined)
+            goodList = items;
+        else badList = [];
+        viewList(items,goodList,'goodList');
+    });
+    storage.getValue('bad_list', function (items) {
+        if (items !== undefined)
+            badList = items;
+        else badList = [];
+        viewList(items,badList,'badList');
     });
     storage.getValue(STORAGE_RESTRICTION_LIST, function (items) {
         restrictionList = items;
@@ -178,12 +205,32 @@ function loadVersion() {
     document.getElementById('version').innerText = 'v' + version;
 }
 
-function viewBlackList(items) {
+function viewList(items,list,listType) {
     if (items !== undefined) {
         for (var i = 0; i < items.length; i++) {
-            addDomainToListBox(items[i]);
+            addDomainToListBox(items[i],list,listType);
         }
     }
+}
+
+function addDomainToListBox(domain, list, listType) {
+    chrome.extension.getBackgroundPage().console.log('add domain to listbox',listType)
+    var li = document.createElement('li');
+    li.innerText = domain;
+    var del = document.createElement('img');
+    del.height = 12;
+    del.src = '/icons/delete.png';
+    del.addEventListener('click', function (e) {
+        deleteSite(e,list,listType);
+    });
+    document.getElementById(listType).appendChild(li).appendChild(del);
+}
+
+function deleteSite(e,list,listType) {
+    var targetElement = e.path[1];
+    list.splice(list.indexOf(targetElement.innerText), 1);
+    document.getElementById(listType).removeChild(targetElement);
+    updateList(listType);
 }
 
 function grantPermissionForYT() {
@@ -346,14 +393,40 @@ function actionAddRectrictionToList(newSite, newTime) {
 }
 
 function actionAddBlackSiteToList(newSite) {
-    if (!isContainsBlackSite(newSite)) {
-        addDomainToListBox(newSite);
+    if (!isContainsSite(newSite,blackList)) {
+        addDomainToListBox(newSite,blackList,'blackList');
         if (blackList === undefined)
             blackList = [];
         blackList.push(newSite);
         document.getElementById('addBlackSiteLbl').value = '';
+        updateList('blackList');
+        return true;
+    } else return false;
+}
+function actionAddGoodSiteToList(newSite) {
+    if (!isContainsSite(newSite,goodList)) {
+        addDomainToListBox(newSite,goodList,'goodList');
+        if (goodList === undefined) {
+            goodList = [];
+        }
+        goodList.push(newSite);
+        document.getElementById('addGoodSiteLbl').value = '';
 
-        updateBlackList();
+        updateList('goodList');
+
+        return true;
+    } else return false;
+}
+function actionAddBadSiteToList(newSite) {
+    if (!isContainsSite(newSite,badList)) {
+        addDomainToListBox(newSite,badList,'badList');
+        if (badList === undefined) {
+            badList = [];
+        }
+        badList.push(newSite);
+        document.getElementById('addBadSiteLbl').value = '';
+
+        updateList('badList');
 
         return true;
     } else return false;
@@ -376,6 +449,7 @@ function actionAddNotifyToList(newSite, newTime) {
 }
 
 function addNewSiteClickHandler(lblName, timeName, actionCheck, notifyBlock) {
+    chrome.extension.getBackgroundPage().console.log('add new site click handler');
     var newSite = document.getElementById(lblName).value;
     var newTime;
     if (timeName != null)
@@ -386,17 +460,7 @@ function addNewSiteClickHandler(lblName, timeName, actionCheck, notifyBlock) {
     }
 }
 
-function addDomainToListBox(domain) {
-    var li = document.createElement('li');
-    li.innerText = domain;
-    var del = document.createElement('img');
-    del.height = 12;
-    del.src = '/icons/delete.png';
-    del.addEventListener('click', function (e) {
-        deleteBlackSite(e);
-    });
-    document.getElementById('blackList').appendChild(li).appendChild(del);
-}
+
 
 function addDomainToEditableListBox(entity, elementId, actionEdit, actionDelete, actionUpdateTimeFromList, actionUpdateList) {
     var li = document.createElement('li');
@@ -446,12 +510,7 @@ function addDomainToEditableListBox(entity, elementId, actionEdit, actionDelete,
     li.appendChild(hr);
 }
 
-function deleteBlackSite(e) {
-    var targetElement = e.path[1];
-    blackList.splice(blackList.indexOf(targetElement.innerText), 1);
-    document.getElementById('blackList').removeChild(targetElement);
-    updateBlackList();
-}
+
 
 function deleteRestrictionSite(e) {
     var targetElement = e.path[1];
@@ -508,8 +567,8 @@ function isContainsNotificationSite(domain) {
     return notifyList.find(x => x.domain == domain) != undefined;
 }
 
-function isContainsBlackSite(domain) {
-    return blackList.find(x => x == domain) != undefined;
+function isContainsSite(domain,list) {
+    return list.find(x => x == domain) != undefined;
 }
 
 function updateItemFromResctrictoinList(domain, time) {
@@ -520,8 +579,28 @@ function updateItemFromNotifyList(domain, time) {
     notifyList.find(x => x.domain === domain).time = convertTimeToSummaryTime(time);
 }
 
-function updateBlackList() {
-    storage.saveValue(STORAGE_BLACK_LIST, blackList);
+// function updateBlackList() {
+//     storage.saveValue(STORAGE_BLACK_LIST, blackList);
+// }
+// function updateGoodList() {
+//     chrome.extension.getBackgroundPage().console.log('update good list')
+//     storage.saveValue('good_list', goodList);
+// }
+// function updateBadList() {
+//     storage.saveValue('bad_list', badList);
+// }
+function updateList(listType) {
+    switch (listType) {
+        case 'blackList':
+            storage.saveValue('black_list', blackList);
+            break;
+        case 'goodList':
+            storage.saveValue('good_list', goodList);
+            break;
+        case 'badList':
+            storage.saveValue('bad_list', badList);
+            break;
+    }
 }
 
 function updateRestrictionList() {

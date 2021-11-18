@@ -15,14 +15,14 @@ var stat = {
         document.getElementById('statFirstDay').innerHTML = value;
     },
     set activeDays(value) {
-        document.getElementById('statActiveDays').innerHTML = value;
+        // document.getElementById('statActiveDays').innerHTML = value;
     },
     set totalDays(value) {
         document.getElementById('statTotalDays').innerHTML = value;
     },
     set inActiveDay(value) {
-        document.getElementById('statInActiveDay').innerHTML = value;
-        this.inActiveDayValue = value;
+        // document.getElementById('statInActiveDay').innerHTML = value;
+        // this.inActiveDayValue = value;
     },
     get inActiveDay() {
         return this.inActiveDayValue;
@@ -68,10 +68,10 @@ var stat = {
         document.getElementById('statActiveDayTimeWithoutCurrentDay').innerHTML = '';
         ui.createElementsForTotalTime(value, TypeListEnum.ToDay, document.getElementById('statActiveDayTimeWithoutCurrentDay'));
     },
-    set todayTime(value) {
-        document.getElementById('statTodayTime').innerHTML = '';
-        ui.createElementsForTotalTime(value, TypeListEnum.ToDay, document.getElementById('statTodayTime'));
-    },
+    // set todayTime(value) {
+    //     document.getElementById('statTodayTime').innerHTML = '';
+    //     ui.createElementsForTotalTime(value, TypeListEnum.ToDay, document.getElementById('statTodayTime'));
+    // },
     set allDaysTime(value) {
         document.getElementById('statAllDaysTime').innerHTML = '';
         ui.createElementsForTotalTime(value, TypeListEnum.All, document.getElementById('statAllDaysTime'));
@@ -79,22 +79,22 @@ var stat = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-    ui.setPreloader();
+    // ui.setPreloader();
 
     storage.getValue(SETTINGS_INTERVAL_RANGE, function (item) { setting_range_days = item; });
-    document.getElementById('btnToday').addEventListener('click', function () {
-        currentTypeOfList = TypeListEnum.ToDay;
-        ui.setUIForToday();
-        getDataFromStorage();
-    });
-    document.getElementById('donutChartBtn').addEventListener('click', function () {
-        ui.setUIForDonutChart();
-        getDataFromStorage();
-    });
-    document.getElementById('heatMapChartBtn').addEventListener('click', function () {
-        ui.setUIForTimeChart();
-        getTimeIntervalList();
-    });
+    // document.getElementById('btnToday').addEventListener('click', function () {
+    //     currentTypeOfList = TypeListEnum.ToDay;
+    //     ui.setUIForToday();
+    //     getDataFromStorage();
+    // });
+    // document.getElementById('donutChartBtn').addEventListener('click', function () {
+    //     ui.setUIForDonutChart();
+    //     getDataFromStorage();
+    // });
+    // document.getElementById('heatMapChartBtn').addEventListener('click', function () {
+    //     ui.setUIForTimeChart();
+    //     getTimeIntervalList();
+    // });
     // document.getElementById('btnAll').addEventListener('click', function () {
     //     currentTypeOfList = TypeListEnum.All;
     //     ui.setUIForAll();
@@ -104,30 +104,30 @@ document.addEventListener('DOMContentLoaded', function () {
         // currentTypeOfList = TypeListEnum.All;
         // ui.setUIForAll();
         ui.setUIForHatch();
-        getDataFromStorage();
+        // getDataFromStorage();
     });
-    document.getElementById('btnByDays').addEventListener('click', function () {
-        currentTypeOfList = TypeListEnum.ByDays;
-        ui.setUIForByDays(setting_range_days);
-        getDataFromStorageByDays();
-    });
-    document.getElementById('statInActiveDayIcon').addEventListener('click', function () {
-        fillBlockWithInActiveDay();
-    });
-    document.getElementById('statActiveDayIcon').addEventListener('click', function () {
-        fillBlockWithActiveDay();
-    });
-    document.getElementById('closeHintBtn').addEventListener('click', function () {
-        document.getElementById('hintForUsers').classList.add('hide');
-        storage.saveValue(SETTINGS_SHOW_HINT, false);
-    });
-    document.getElementById('settings').addEventListener('click', function () {
-        if (chrome.runtime.openOptionsPage) {
-            chrome.runtime.openOptionsPage();
-        } else {
-            window.open(chrome.runtime.getURL('options.html'));
-        }
-    });
+    // document.getElementById('btnByDays').addEventListener('click', function () {
+    //     currentTypeOfList = TypeListEnum.ByDays;
+    //     ui.setUIForByDays(setting_range_days);
+    //     getDataFromStorageByDays();
+    // });
+    // document.getElementById('statInActiveDayIcon').addEventListener('click', function () {
+    //     fillBlockWithInActiveDay();
+    // });
+    // document.getElementById('statActiveDayIcon').addEventListener('click', function () {
+    //     fillBlockWithActiveDay();
+    // });
+    // document.getElementById('closeHintBtn').addEventListener('click', function () {
+    //     document.getElementById('hintForUsers').classList.add('hide');
+    //     storage.saveValue(SETTINGS_SHOW_HINT, false);
+    // });
+    // document.getElementById('settings').addEventListener('click', function () {
+    //     if (chrome.runtime.openOptionsPage) {
+    //         chrome.runtime.openOptionsPage();
+    //     } else {
+    //         window.open(chrome.runtime.getURL('options.html'));
+    //     }
+    // });
 
 
     //导航栏按钮
@@ -174,11 +174,11 @@ function firstInitPage() {
         chrome.extension.getBackgroundPage().console.log('init',bg)
         currentTypeOfList = TypeListEnum.ToDay;
         getLimitsListFromStorage();
-        getDataFromStorage();
-        storage.getValue(SETTINGS_SHOW_HINT, function (item) {
-            if (item)
-                document.getElementById('hintForUsers').classList.remove('hide');
-        });
+        // getDataFromStorage();
+        // storage.getValue(SETTINGS_SHOW_HINT, function (item) {
+        //     if (item)
+        //         document.getElementById('hintForUsers').classList.remove('hide');
+        // });
     });
 }
 
@@ -192,16 +192,16 @@ function getLimitsListFromStorage() {
     storage.loadTabs(STORAGE_RESTRICTION_LIST, getLimitsListFromStorageCallback);
 }
 
-function getDataFromStorage() {
-    if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
-        getTabsFromStorage(tabsFromBackground);
-    else fillEmptyBlock();
-}
+// function getDataFromStorage() {
+//     if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
+//         getTabsFromStorage(tabsFromBackground);
+//     else fillEmptyBlock();
+// }
 
-function getDataFromStorageByDays() {
-    if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
-        getTabsByDays(tabsFromBackground);
-}
+// function getDataFromStorageByDays() {
+//     if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
+//         getTabsByDays(tabsFromBackground);
+// }
 
 function getLimitsListFromStorageCallback(items) {
     if (items !== undefined)
@@ -213,7 +213,7 @@ function fillEmptyBlock() {
     ui.removePreloader();
     ui.fillEmptyBlock('chart');
 }
-
+/*
 function getTabsFromStorage(tabs) {
     tabsFromStorage = tabs;
     targetTabs = [];
@@ -297,7 +297,9 @@ function getTabsFromStorage(tabs) {
 
     ui.removePreloader();
 }
+*/
 
+/*
 function getTabsForTimeChart(timeIntervals) {
     var resultArr = [];
     if (timeIntervals != undefined) {
@@ -311,20 +313,22 @@ function getTabsForTimeChart(timeIntervals) {
     }
     return resultArr;
 }
-
+*/
+/*
 function getTabsForExpander() {
     if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
         getTabsFromStorageForExpander(tabsFromBackground);
 }
-
+*/
 function getTimeIntervalList() {
     storage.getValue(STORAGE_TIMEINTERVAL_LIST, drawTimeChart);
 }
-
+/*
 function drawTimeChart(items) {
     ui.drawTimeChart(getTabsForTimeChart(items));
 }
-
+*/
+/*
 function getTabsFromStorageForExpander(tabs) {
     tabsFromStorage = tabs;
     targetTabs = [];
@@ -356,7 +360,7 @@ function getTabsFromStorageForExpander(tabs) {
     table.removeChild(table.getElementsByTagName('hr')[0]);
     ui.addHrAfterTableOfSite();
 }
-
+*/
 function getTotalTime(tabs) {
     var total;
     if (currentTypeOfList === TypeListEnum.ToDay) {
@@ -378,6 +382,7 @@ function getTotalTimeForDay(day, tabs) {
 }
 
 function getPercentage(time) {
+    chrome.extension.getBackgroundPage().console.log('percent', time,totalTime);
     return ((time / totalTime) * 100).toFixed(2) + ' %';
 }
 
@@ -414,7 +419,7 @@ function addTabOthersForChart(tabsForChart, summaryTime) {
 
 function getFirstDay() {
     var array = [];
-    tabsFromStorage.map(function (a) {
+    tabsFromBackground.map(function (a) {
         return a.days.map(function (a) {
             if (array.indexOf(a.date) === -1)
                 return array.push(a.date);
@@ -425,7 +430,7 @@ function getFirstDay() {
         return new Date(a) - new Date(b);
     });
 
-    setStatData(array);
+    // setStatData(array);
     return {
         'countOfDays': array.length,
         'minDate': array[0]
@@ -435,7 +440,7 @@ function getFirstDay() {
 function setStatData(array) {
     var arrayAscByTime = [];
     var arrayAscByTimeWithoutCurrentDay = [];
-    tabsFromStorage.forEach(tab => {
+    tabsFromBackground.forEach(tab => {
         return tab.days.forEach(day => {
             var item = arrayAscByTime.find(x => x.date == day.date);
             if (item !== undefined) {

@@ -32,42 +32,42 @@ class UI {
     
     // 设置孵蛋页面
     setUIForHatch() {
-        document.getElementById('btnHatch').classList.add('active');
-        document.getElementById('btnToday').classList.remove('active');
-        document.getElementById('btnByDays').classList.remove('active');
+        // document.getElementById('btnHatch').classList.add('active');
+        // document.getElementById('btnToday').classList.remove('active');
+        // document.getElementById('btnByDays').classList.remove('active');
 
-        document.getElementById('blockForChartBtn').classList.add('hide');
-        document.getElementById('stats').classList.add('hide');
-        document.getElementById('labelForTimeInterval').classList.add('hide');
-        // this.setUIForHatchPage();
-        this.clearUI();
-        // document.getElementById('hatchPanel').classList.add('active-panel');
+        // document.getElementById('blockForChartBtn').classList.add('hide');
+        // document.getElementById('stats').classList.add('hide');
+        // document.getElementById('labelForTimeInterval').classList.add('hide');
+        // // this.setUIForHatchPage();
+        // this.clearUI();
+        // // document.getElementById('hatchPanel').classList.add('active-panel');
 
-        var div = document.getElementById('byDays');
-        var barChart = document.createElement('div');
-        barChart.id = 'barChart';
+        // var div = document.getElementById('byDays');
+        // var barChart = document.createElement('div');
+        // barChart.id = 'barChart';
 
-        var from = this.createElement('span', null, 'From');
-        var to = this.createElement('span', null, 'To');
+        // var from = this.createElement('span', null, 'From');
+        // var to = this.createElement('span', null, 'To');
 
-        var calendarFirst = document.createElement('input');
-        calendarFirst.id = 'dateFrom';
-        calendarFirst.type = 'date';
-        var previousDate = new Date();
-        previousDate.setDate(previousDate.getDate() - getDateFromRange(range));
-        calendarFirst.valueAsDate = new Date(Date.UTC(previousDate.getFullYear(), previousDate.getMonth(), previousDate.getDate()));
+        // var calendarFirst = document.createElement('input');
+        // calendarFirst.id = 'dateFrom';
+        // calendarFirst.type = 'date';
+        // var previousDate = new Date();
+        // previousDate.setDate(previousDate.getDate() - getDateFromRange(range));
+        // calendarFirst.valueAsDate = new Date(Date.UTC(previousDate.getFullYear(), previousDate.getMonth(), previousDate.getDate()));
 
-        var calendarTwo = document.createElement('input');
-        calendarTwo.id = 'dateTo';
-        calendarTwo.type = 'date';
-        calendarTwo.valueAsDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
+        // var calendarTwo = document.createElement('input');
+        // calendarTwo.id = 'dateTo';
+        // calendarTwo.type = 'date';
+        // calendarTwo.valueAsDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
 
-        var tableForDaysBlock = document.createElement('div');
-        tableForDaysBlock.id = 'tableForDaysBlock';
+        // var tableForDaysBlock = document.createElement('div');
+        // tableForDaysBlock.id = 'tableForDaysBlock';
 
-        div = this.appendChild(div, [barChart, from, calendarFirst, to, calendarTwo]);
+        // div = this.appendChild(div, [barChart, from, calendarFirst, to, calendarTwo]);
 
-        div.append(tableForDaysBlock);
+        // div.append(tableForDaysBlock);
 
     }
 
@@ -85,25 +85,25 @@ class UI {
 
     clearUI() {
         document.getElementById('statisticTable').innerHTML = null;
-        document.getElementById('chart').innerHTML = null;
-        document.getElementById('timeChart').innerHTML = null;
-        document.getElementById('total').innerHTML = null;
-        document.getElementById('byDays').innerHTML = null;
+        // document.getElementById('chart').innerHTML = null;
+        // document.getElementById('timeChart').innerHTML = null;
+        // document.getElementById('total').innerHTML = null;
+        // document.getElementById('byDays').innerHTML = null;
     }
 
-    setUIForDonutChart() {
-        document.getElementById('donutChartBtn').classList.add('active');
-        document.getElementById('heatMapChartBtn').classList.remove('active');
-        document.getElementById('timeChart').innerHTML = null;
-        document.getElementById('labelForTimeInterval').classList.add('hide');
-    }
+    // setUIForDonutChart() {
+    //     document.getElementById('donutChartBtn').classList.add('active');
+    //     document.getElementById('heatMapChartBtn').classList.remove('active');
+    //     document.getElementById('timeChart').innerHTML = null;
+    //     document.getElementById('labelForTimeInterval').classList.add('hide');
+    // }
 
-    setUIForTimeChart() {
-        document.getElementById('donutChartBtn').classList.remove('active');
-        document.getElementById('heatMapChartBtn').classList.add('active');
-        document.getElementById('chart').innerHTML = null;
-        document.getElementById('labelForTimeInterval').classList.remove('hide');
-    }
+    // setUIForTimeChart() {
+    //     document.getElementById('donutChartBtn').classList.remove('active');
+    //     document.getElementById('heatMapChartBtn').classList.add('active');
+    //     document.getElementById('chart').innerHTML = null;
+    //     document.getElementById('labelForTimeInterval').classList.remove('hide');
+    // }
 
     createTotalBlock(totalTime, currentTypeOfList, counter) {
         var totalElement = document.getElementById('total');
@@ -206,23 +206,25 @@ class UI {
     addLineToTableOfSite(tab, currentTab, summaryTime, typeOfList, counter, blockName) {
         var div = document.createElement('div');
         div.addEventListener('mouseenter', function() {
-            if (document.getElementById('chart').innerHTML !== '') {
+            if (document.getElementById('statisticChart').innerHTML !== '') {
                 var item = document.getElementById(tab.url);
                 if (item !== null) {
                     item.dispatchEvent(new Event('mouseenter'));
                     item.classList.add('mouse-over');
-                } else {
-                    document.getElementById('Others').dispatchEvent(new Event('mouseenter'));
-                    document.getElementById('Others').classList.add('mouse-over');
                 }
+                // else {
+                //     document.getElementById('Others').dispatchEvent(new Event('mouseenter'));
+                //     document.getElementById('Others').classList.add('mouse-over');
+                // }
             }
         });
         div.addEventListener('mouseout', function() {
-            if (document.getElementById('chart').innerHTML !== '') {
+            if (document.getElementById('statisticChart').innerHTML !== '') {
                 var item = document.getElementById(tab.url);
                 if (item !== null) {
                     item.classList.remove('mouse-over');
-                } else document.getElementById('Others').classList.remove('mouse-over');
+                }
+                // else document.getElementById('Others').classList.remove('mouse-over');
             }
         });
         div.classList.add('inline-flex');
@@ -272,7 +274,7 @@ class UI {
         var visitsTooltip = this.createElement('span', ['tooltiptext'], 'Count of visits');
 
         spanVisits.appendChild(visitsTooltip);
-
+        chrome.extension.getBackgroundPage().console.log('abc', totalTime);
         var spanPercentage = this.createElement('span', ['span-percentage'], getPercentage(summaryTime));
         var spanTime = this.createElement('span', ['span-time']);
         this.createElementsForTotalTime(summaryTime, typeOfList, spanTime);
@@ -470,8 +472,8 @@ class UI {
         document.getElementById('pageHatch').classList.remove('active');
         document.getElementById('pageBattle').classList.remove('active');
         document.getElementById('pageSettings').classList.remove('active');
-        if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
-            getTabsFromStorage(tabsFromBackground);
+        // if (tabsFromBackground != undefined && tabsFromBackground != null && tabsFromBackground.length > 0)
+        //     getTabsFromStorage(tabsFromBackground);
         this.showTodayStatistic();
     }
     showHatchPage() {
@@ -510,15 +512,18 @@ class UI {
     }
     showTable() {
         let counterOfSite = 5;
-        let totalTime = 900;
+        totalTime = 900;
         let targetTabs = tabsFromBackground.sort(function (a, b) {
             return b.summaryTime - a.summaryTime;
         });
         if (currentTypeOfList === TypeListEnum.All) {
             ui.addTableHeader(currentTypeOfList, counterOfSite, totalTime, getFirstDay());
+            totalTime = getTotalTime(targetTabs);
         }
         
         if (currentTypeOfList === TypeListEnum.ToDay) {
+            totalTime = getTotalTime(targetTabs);
+            chrome.extension.getBackgroundPage().console.log('showtable totaltime', totalTime);
             chrome.extension.getBackgroundPage().console.log(currentTypeOfList, counterOfSite, totalTime);
             ui.addTableHeader(currentTypeOfList, counterOfSite, totalTime);
             targetTabs = tabsFromBackground.filter(x => x.days.find(s => s.date === todayLocalDate()));
