@@ -1,7 +1,7 @@
 {
    "background": {
       "persistent": false,
-      "scripts": [ "scripts/common.js", "scripts/storage.js", "scripts/activity.js", "scripts/tab.js", "scripts/timeInterval.js", "scripts/background.js", "scripts/restriction.js" ]
+      "scripts": [ "scripts/common.js", "scripts/storage.js", "scripts/activity.js", "scripts/tab.js", "scripts/timeInterval.js", "scripts/background.js" ]
    },
    "browser_action": {
       "default_icon": "icons/egg48.png",

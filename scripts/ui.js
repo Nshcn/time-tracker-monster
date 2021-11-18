@@ -5,83 +5,17 @@ class UI {
         return document.getElementById('statisticTable');
     }
 
-    setUIForToday() {
-        document.getElementById('btnToday').classList.add('active');
-        document.getElementById('btnHatch').classList.remove('active');
-        document.getElementById('btnByDays').classList.remove('active');
-        document.getElementById('blockForChartBtn').classList.remove('hide');
-        document.getElementById('stats').classList.add('hide');
-        document.getElementById('labelForTimeInterval').classList.add('hide');
-        this.setUIForDonutChart();
-
-        this.clearUI();
-    }
-
     // 设置孵蛋页面
     setUIForHatch() {
 
-    }
-
-    setUIForByDays(range) {
-        document.getElementById('btnByDays').classList.add('active');
-        document.getElementById('btnHatch').classList.remove('active');
-        document.getElementById('btnToday').classList.remove('active');
-        document.getElementById('blockForChartBtn').classList.add('hide');
-        document.getElementById('stats').classList.add('hide');
-        document.getElementById('labelForTimeInterval').classList.add('hide');
-
-        this.clearUI();
-        this.addBlockForCalendar(range);
     }
 
     clearUI() {
         document.getElementById('statisticTable').innerHTML = null;
     }
 
-    createTotalBlock(totalTime, currentTypeOfList, counter) {
-        var totalElement = document.getElementById('total');
-
-        var spanVisits = this.createElement('span', ['span-visits', 'tooltip', 'visits'], counter !== undefined ? counter : 0);
-        var visitsTooltip = this.createElement('span', ['tooltiptext'], 'Count of visits');
-        spanVisits.appendChild(visitsTooltip);
-
-        var spanPercentage = this.createElement('span', ['span-percentage'], '100 %');
-
-        var div = this.createElement('div', ['margin-left-5', 'total-block'], 'Total');
-        var span = this.createElement('span', ['span-time']);
-        this.createElementsForTotalTime(totalTime, currentTypeOfList, span);
-
-        this.appendChild(totalElement, [div, spanVisits, spanPercentage, span]);
-    }
-
     fillEmptyBlock(elementName) {
         document.getElementById(elementName).innerHTML = '<p class="no-data">No data</p>';
-    }
-
-    fillEmptyBlockForDaysIfInvalid() {
-        document.getElementById('tableForDaysBlock').innerHTML = '<p class="no-data">Invalid date</p>';
-    }
-
-    fillEmptyBlockForDays() {
-        document.getElementById('tableForDaysBlock').innerHTML = '<p class="no-data">No data</p>';
-    }
-
-    addHrAfterChart() {
-        document.getElementById('chart').appendChild(document.createElement('hr'));
-    }
-
-    addHrAfterTableOfSite() {
-        this.getTableOfSite().appendChild(document.createElement('hr'));
-    }
-
-    setActiveTooltipe(currentTab) {
-        if (currentTab !== '') {
-            var element = document.getElementById(currentTab);
-            if (element !== null) {
-                var event = new Event("mouseenter");
-                document.getElementById(currentTab).dispatchEvent(event);
-            }
-        }
     }
 
     addTableHeader(currentTypeOfList, counterOfSite, totalTime, totalDays) {
@@ -175,7 +109,6 @@ class UI {
         var visitsTooltip = this.createElement('span', ['tooltiptext'], 'Count of visits');
 
         spanVisits.appendChild(visitsTooltip);
-        chrome.extension.getBackgroundPage().console.log('abc', totalTime);
         var spanPercentage = this.createElement('span', ['span-percentage'], getPercentage(summaryTime));
         var spanTime = this.createElement('span', ['span-time']);
         this.createElementsForTotalTime(summaryTime, typeOfList, spanTime);
@@ -224,113 +157,6 @@ class UI {
     expand() {
         getTabsForExpander();
         this.getTableOfSite().removeChild(document.getElementById('expander'));
-    }
-
-    addBlockForCalendar(range) {
-        var div = document.getElementById('byDays');
-        var barChart = document.createElement('div');
-        barChart.id = 'barChart';
-
-        var from = this.createElement('span', null, 'From');
-        var to = this.createElement('span', null, 'To');
-
-        var calendarFirst = document.createElement('input');
-        calendarFirst.id = 'dateFrom';
-        calendarFirst.type = 'date';
-        var previousDate = new Date();
-        previousDate.setDate(previousDate.getDate() - getDateFromRange(range));
-        calendarFirst.valueAsDate = new Date(Date.UTC(previousDate.getFullYear(), previousDate.getMonth(), previousDate.getDate()));
-
-        var calendarTwo = document.createElement('input');
-        calendarTwo.id = 'dateTo';
-        calendarTwo.type = 'date';
-        calendarTwo.valueAsDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
-
-        var tableForDaysBlock = document.createElement('div');
-        tableForDaysBlock.id = 'tableForDaysBlock';
-
-        div = this.appendChild(div, [barChart, from, calendarFirst, to, calendarTwo]);
-
-        div.append(tableForDaysBlock);
-
-        document.getElementById('dateFrom').addEventListener('change', function() {
-            getTabsByDays(tabsFromStorage);
-        });
-
-        document.getElementById('dateTo').addEventListener('change', function() {
-            getTabsByDays(tabsFromStorage);
-        });
-    }
-
-    getDateRange() {
-        return {
-            'from': new Date(document.getElementById('dateFrom').value),
-            'to': new Date(document.getElementById('dateTo').value)
-        };
-    }
-
-    fillListOfDays(days, allDays) {
-        var parent = document.getElementById('tableForDaysBlock');
-        parent.innerHTML = null;
-        document.getElementById('barChart').innerHTML = null;
-        if (days.length > 0) {
-            var daysForBarChart = this.fillDaysForBarChart(days, allDays);
-            this.drawBarChart(daysForBarChart);
-
-            var header = this.createElement('div', ['table-header']);
-
-            var headerTitleDate = this.createElement('span', ['header-title-day'], 'Day');
-            var headerTitleTime = this.createElement('span', ['header-title-time'], 'Summary time');
-
-            header = this.appendChild(header, [headerTitleDate, headerTitleTime]);
-            parent.appendChild(header);
-
-            for (var i = 0; i < days.length; i++) {
-                var check = this.createElement('input', ['toggle']);
-                check.type = 'checkbox';
-                check.id = days[i].date;
-
-                var label = this.createElement('label', ['day-block', 'lbl-toggle']);
-                label.setAttribute('for', days[i].date);
-                var span = this.createElement('span', ['day'], new Date(days[i].date).toLocaleDateString());
-                var spanTime = this.createElement('span', ['span-time']);
-                this.createElementsForTotalTime(days[i].total, TypeListEnum.ByDays, spanTime);
-
-                label = this.appendChild(label, [span, spanTime]);
-                parent = this.appendChild(parent, [check, label]);
-
-                var div = this.createElement('div', ['collapsible-content'], convertSummaryTimeToString(days[i].total));
-                div.id = days[i].date + '_block';
-                parent.appendChild(div);
-
-                document.getElementById(days[i].date).addEventListener('click', function() {
-                    var element = document.getElementById(this.id + '_block');
-                    element.innerHTML = null;
-                    getTabsFromStorageByDay(this.id, this.id + '_block')
-                });
-            }
-
-        } else {
-            this.fillEmptyBlock('tableForDaysBlock');
-        }
-    }
-
-    fillDaysForBarChart(days, allDays) {
-        var resultList = [];
-        allDays.forEach(element => {
-            var day = days.find(x => x.date == element);
-            if (day !== undefined) {
-                resultList.push({
-                    'date': day.date,
-                    'total': day.total
-                });
-            } else resultList.push({
-                'date': element,
-                'total': 0
-            });
-        });
-
-        return resultList;
     }
 
     createElement(type, css, innerText) {
@@ -426,8 +252,6 @@ class UI {
             });
             counterOfSite = targetTabs.length;
             totalTime = getTotalTime(targetTabs);
-            chrome.extension.getBackgroundPage().console.log('showtable totaltime', totalTime);
-            chrome.extension.getBackgroundPage().console.log(currentTypeOfList, counterOfSite, totalTime);
             ui.addTableHeader(currentTypeOfList, counterOfSite, totalTime);
             targetTabs = tabsFromBackground.filter(x => x.days.find(s => s.date === todayLocalDate()));
         }
@@ -460,14 +284,11 @@ class UI {
     
             if (i <= 8) {
                 addTabForChart(tabsForChart, targetTabs[i].url, summaryTime, counter);
-            } else {
-                addTabOthersForChart(tabsForChart, summaryTime);
-            }
+            } 
                 
         }
     }
     showAllStatistic() {
-        chrome.extension.getBackgroundPage().console.log('all stats',tabsFromBackground)
         let data = tabsFromBackground.map(item => {
             return {
                 name: item.url,
@@ -524,5 +345,3 @@ class UI {
         option && myChart.setOption(option);
     }
 }
-
-chrome.extension.getBackgroundPage().console.log()

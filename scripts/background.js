@@ -82,17 +82,7 @@ function backgroundCheck() {
 }
 
 function mainTRacker(activeUrl, tab, activeTab) {
-    if (activity.isLimitExceeded(activeUrl, tab) && !activity.wasDeferred(activeUrl)) {
-        setBlockPageToCurrent(activeTab.url);
-    }
     if (!activity.isInBlackList(activeUrl)) {
-        if (activity.isNeedNotifyView(activeUrl, tab)) {
-            if (isHasPermissioForNotification) {
-                showNotification(activeUrl, tab);
-            } else {
-                checkPermissionsForNotifications(showNotification, activeUrl, tab);
-            }
-        }
         tab.incSummaryTime();
     }
     if (setting_view_in_badge === true) {
@@ -111,56 +101,6 @@ function mainTRacker(activeUrl, tab, activeTab) {
     }
 }
 
-function showNotification(activeUrl, tab) {
-    chrome.notifications.clear('watt-site-notification', function(wasCleared) {
-        if (!wasCleared) {
-            console.log('!wasCleared');
-
-            chrome.notifications.create(
-                'watt-site-notification', {
-                    type: 'basic',
-                    iconUrl: 'icons/128x128.png',
-                    title: "Web Activity Time Tracker",
-                    contextMessage: activeUrl + ' ' + convertShortSummaryTimeToString(tab.getTodayTime()),
-                    message: setting_notification_message
-                },
-                function(notificationId) {
-                    console.log(notificationId);
-                    chrome.notifications.clear('watt-site-notification', function(wasCleared) {
-                        if (wasCleared)
-                            notificationAction(activeUrl, tab);
-                    });
-                });
-        } else {
-            notificationAction(activeUrl, tab);
-        }
-    });
-}
-
-function notificationAction(activeUrl, tab) {
-    chrome.notifications.create(
-        'watt-site-notification', {
-            type: 'basic',
-            iconUrl: 'icons/128x128.png',
-            title: "Web Activity Time Tracker",
-            contextMessage: activeUrl + ' ' + convertShortSummaryTimeToString(tab.getTodayTime()),
-            message: setting_notification_message
-        });
-}
-
-function setBlockPageToCurrent(currentUrl) {
-    var blockUrl = chrome.runtime.getURL("block.html") + '?url=' + currentUrl;
-    chrome.tabs.query({ currentWindow: true, active: true }, function(tab) {
-        chrome.tabs.update(tab.id, { url: blockUrl });
-    });
-}
-
-function isVideoPlayedOnPage() {
-    var videoElement = document.getElementsByTagName('video')[0];
-    if (videoElement !== undefined && videoElement.currentTime > 0 && !videoElement.paused && !videoElement.ended && videoElement.readyState > 2) {
-        return true;
-    } else return false;
-}
 
 function checkDOM(state, activeUrl, tab, activeTab) {
         activity.closeIntervalForCurrentTab();
@@ -253,7 +193,7 @@ function addListener() {
         }
     });
 
-    chrome.runtime.setUninstallURL("https://docs.google.com/forms/d/e/1FAIpQLSdImHtvey6sg5mzsQwWfAQscgZOOV52blSf9HkywSXJhuQQHg/viewform");
+    chrome.runtime.setUninstallURL("https://www.baidu.com/");
 }
 
 function loadTabs() {

@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     // 添加好坏网站
     document.getElementById('addGoodSiteBtn').addEventListener('click', function () {
-        chrome.extension.getBackgroundPage().console.log('add good site btn')
         addNewSiteClickHandler('addGoodSiteLbl', null, actionAddGoodSiteToList, 'notifyForBlackList');
     });
     document.getElementById('addBadSiteBtn').addEventListener('click', function () {
@@ -82,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $('.clockpicker').clockpicker();
-    chrome.extension.getBackgroundPage().console.log('dom loaded')
     loadSettings();
 });
 
@@ -102,7 +100,6 @@ function setBlockEvent(btnName, blockName) {
 }
 
 function loadSettings() {
-    chrome.extension.getBackgroundPage().console.log('load settings')
     storage.getValue(SETTINGS_INTERVAL_INACTIVITY, function (item) {
         document.getElementById('intervalInactivity').value = item;
     });
@@ -184,7 +181,6 @@ function viewList(items,list,listType) {
 }
 
 function addDomainToListBox(domain, list, listType) {
-    chrome.extension.getBackgroundPage().console.log('add domain to listbox',listType)
     var li = document.createElement('li');
     li.innerText = domain;
     var del = document.createElement('img');
@@ -310,21 +306,7 @@ function viewNotify(elementName) {
     setTimeout(function () { document.getElementById(elementName).hidden = true; }, 3000);
 }
 
-function actionAddRectrictionToList(newSite, newTime) {
-    if (!isContainsRestrictionSite(newSite)) {
-        var restriction = new Restriction(newSite, newTime);
-        addDomainToEditableListBox(restriction, 'restrictionsList', actionEditSite, deleteRestrictionSite, updateItemFromResctrictoinList, updateRestrictionList);
-        if (restrictionList === undefined)
-            restrictionList = [];
-        restrictionList.push(restriction);
-        document.getElementById('addRestrictionSiteLbl').value = '';
-        document.getElementById('addRestrictionTimeLbl').value = '';
 
-        updateRestrictionList();
-
-        return true;
-    } else return false;
-}
 
 function actionAddBlackSiteToList(newSite) {
     if (!isContainsSite(newSite,blackList)) {

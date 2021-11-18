@@ -58,22 +58,6 @@ class Activity {
         return false
     }
 
-    isLimitExceeded(domain, tab) {
-        if (setting_restriction_list !== undefined && setting_restriction_list.length > 0) {
-            var item = setting_restriction_list.find(o => isDomainEquals(extractHostname(o.domain), extractHostname(domain)));
-            if (item !== undefined) {
-                var data = tab.days.find(x => x.date == todayLocalDate());
-                if (data !== undefined) {
-                    var todayTimeUse = data.summary;
-                    if (todayTimeUse >= item.time) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     wasDeferred(domain){
         if (deferredRestrictionsList != undefined){
             let defItem = deferredRestrictionsList.find(x => extractHostname(x.site) == extractHostname(domain));
@@ -152,22 +136,5 @@ class Activity {
                 item.closeInterval();
         }
         currentTab = '';
-    }
-
-    isNeedNotifyView(domain, tab){
-        if (setting_notification_list !== undefined && setting_notification_list.length > 0) {
-            var item = setting_notification_list.find(o => isDomainEquals(extractHostname(o.domain), extractHostname(domain)));
-            if (item !== undefined) {
-                var today = todayLocalDate();
-                var data = tab.days.find(x => x.date == today);
-                if (data !== undefined) {
-                    var todayTimeUse = data.summary;
-                    if (todayTimeUse == item.time || todayTimeUse % item.time == 0) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 };
