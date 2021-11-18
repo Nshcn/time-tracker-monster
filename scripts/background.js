@@ -23,8 +23,8 @@ var isHasPermissioForNetflix;
 var isHasPermissioForNotification;
 
 var coin=10;
-var goodList;
-var badList;
+var good_list=['element.eleme.cn'];
+var bad_list=['www.yuque.com' ];
 
 function updateSummaryTime() {
     setInterval(backgroundCheck, SETTINGS_INTERVAL_CHECK_DEFAULT);
@@ -43,6 +43,21 @@ function backgroundCheck() {
                 var tab = activity.getTab(activeUrl);
                 if (tab === undefined) {
                     activity.addTab(activeTab);
+                }
+                if (activity.isInGoodList(activeUrl)) {
+                    storage.getValue('coin', function (item) {
+                        coin=item+1;
+                    });
+                    chrome.extension.getBackgroundPage().console.log('好网站，coin+1',coin);
+                }else if(activity.isInBadList(activeUrl)) {
+                    storage.getValue('coin', function (item) {
+                        if (item > 0) {
+                            coin=item-1;
+                        } else {
+                            chrome.extension.getBackgroundPage().console.log('你一个硬币都没有了！！！');
+                        }
+                    });
+                    chrome.extension.getBackgroundPage().console.log('坏网站，coin-1',coin);
                 }
 
                 if (activity.isInBlackList(activeUrl)) {
@@ -209,7 +224,7 @@ function setDefaultSettings() {
     storage.saveValue(SETTINGS_INTERVAL_SAVE_STORAGE, SETTINGS_INTERVAL_SAVE_STORAGE_DEFAULT);
     storage.saveValue(STORAGE_NOTIFICATION_MESSAGE, STORAGE_NOTIFICATION_MESSAGE_DEFAULT);
     storage.saveValue('coin', 10);
-    storage.saveValue('good_list', []);
+    storage.saveValue('good_list', good_list);
     storage.saveValue('bad_list', []);
 }
 

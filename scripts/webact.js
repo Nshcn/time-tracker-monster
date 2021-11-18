@@ -142,7 +142,11 @@ document.addEventListener('DOMContentLoaded', function () {
         ui.showBattlePage();
     });
     document.getElementById('btnSettings').addEventListener('click', function () {
-        ui.showSettingsPage();
+        if (chrome.runtime.openOptionsPage) {
+            chrome.runtime.openOptionsPage();
+        } else {
+            window.open(chrome.runtime.getURL('options.html'));
+        }
     });
 
     // 数据统计页相关的nav

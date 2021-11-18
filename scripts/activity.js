@@ -45,6 +45,19 @@ class Activity {
         else return false;
     }
 
+    isInGoodList(domain) {
+        if (good_list != undefined && good_list.length > 0) {
+            return good_list.find(o => isDomainEquals(extractHostname(o), extractHostname(domain))) !== undefined;
+        }
+        return false
+    }
+    isInBadList(domain) {
+        if (bad_list != undefined && good_list.length > 0) {
+            return bad_list.find(o => isDomainEquals(extractHostname(o), extractHostname(domain))) !== undefined;
+        }
+        return false
+    }
+
     isLimitExceeded(domain, tab) {
         if (setting_restriction_list !== undefined && setting_restriction_list.length > 0) {
             var item = setting_restriction_list.find(o => isDomainEquals(extractHostname(o.domain), extractHostname(domain)));
