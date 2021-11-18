@@ -1,16 +1,20 @@
 {
     "browser_action": {
-       "default_icon": "icons/egg48.png",
-       "default_popup": "index.html",
-       "default_title": "Time Tracker Monster"
+        "default_icon": "icons/egg48.png",
+        "default_popup": "index.html",
+        "default_title": "Time Tracker Monster"
     },
     "description": "Track Monster",
     "icons": {
-       "128": "icons/egg128.png",
-       "16": "icons/egg16.png",
-       "32": "icons/egg32.png",
-       "48": "icons/egg48.png"
+        "128": "icons/egg128.png",
+        "16": "icons/egg16.png",
+        "32": "icons/egg32.png",
+        "48": "icons/egg48.png"
     },
+    "permissions": [
+        "storage",
+        "notifications"
+    ],
     "manifest_version": 2,
     "minimum_chrome_version": "26",
     "name": "Time Tracker Monster",
@@ -18,5 +22,4 @@
     "options_page": "options.html",
     "short_name": "Web Time Tracker",
     "version": "1.0.0"
- }
- 
+}
