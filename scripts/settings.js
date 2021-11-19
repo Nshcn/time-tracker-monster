@@ -4,18 +4,12 @@ var goodList = [];
 var badList = [];
 var restrictionList = [];
 var notifyList = [];
-var blockBtnList = ['settingsBtn', 'restrictionsBtn', 'notifyBtn', 'aboutBtn', 'donateBtn'];
-var blockList = ['settingsBlock', 'restrictionsBlock', 'notifyBlock', 'aboutBlock', 'donateBlock'];
+var blockBtnList = ['settingsBtn', 'aboutBtn', 'donateBtn'];
+var blockList = ['settingsBlock', 'aboutBlock', 'donateBlock'];
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('settingsBtn').addEventListener('click', function () {
         setBlockEvent('settingsBtn', 'settingsBlock');
-    });
-    document.getElementById('restrictionsBtn').addEventListener('click', function () {
-        setBlockEvent('restrictionsBtn', 'restrictionsBlock');
-    });
-    document.getElementById('notifyBtn').addEventListener('click', function () {
-        setBlockEvent('notifyBtn', 'notifyBlock');
     });
     document.getElementById('aboutBtn').addEventListener('click', function () {
         setBlockEvent('aboutBtn', 'aboutBlock');
@@ -23,21 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     document.getElementById('donateBtn').addEventListener('click', function () {
         setBlockEvent('donateBtn', 'donateBlock');
-    });
-    document.getElementById('clearAllData').addEventListener('click', function () {
-        clearAllData();
-    });
-    document.getElementById('exportToCsv').addEventListener('click', function () {
-        exportToCSV();
-    });
-    document.getElementById('backup').addEventListener('click', function () {
-        backup();
-    });
-    document.getElementById('restore').addEventListener('click', function () {
-        restoreDataClick();
-    });
-    document.getElementById('file-input-backup').addEventListener('change', function (e) {
-        restore(e);
     });
     document.getElementById('addBlackSiteBtn').addEventListener('click', function () {
         addNewSiteClickHandler('addBlackSiteLbl', null, actionAddBlackSiteToList, 'notifyForBlackList');
@@ -49,37 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addBadSiteBtn').addEventListener('click', function () {
         addNewSiteClickHandler('addBadSiteLbl', null, actionAddBadSiteToList, 'notifyForBlackList');
     });
-    document.getElementById('addRestrictionSiteBtn').addEventListener('click', function () {
-        addNewSiteClickHandler('addRestrictionSiteLbl', 'addRestrictionTimeLbl', actionAddRectrictionToList, 'notifyForRestrictionList');
-    });
-    document.getElementById('addNotifySiteBtn').addEventListener('click', function () {
-        addNewSiteClickHandler('addNotifySiteLbl', 'addNotifyTimeLbl', actionAddNotifyToList, 'notifyForNotifyList');
-    });
-    document.getElementById('viewTimeInBadge').addEventListener('change', function () {
-        storage.saveValue(SETTINGS_VIEW_TIME_IN_BADGE, this.checked);
-    });
-    document.getElementById('blockDeferral').addEventListener('change', function () {
-        storage.saveValue(SETTINGS_BLOCK_DEFERRAL, this.checked);
-    });
-    document.getElementById('darkMode').addEventListener('change', function () {
-        storage.saveValue(SETTINGS_DARK_MODE, this.checked);
-    });
-    document.getElementById('intervalInactivity').addEventListener('change', function () {
-        storage.saveValue(SETTINGS_INTERVAL_INACTIVITY, this.value);
-    });
-    document.getElementById('rangeToDays').addEventListener('change', function () {
-        storage.saveValue(SETTINGS_INTERVAL_RANGE, this.value);
-    });
-    document.getElementById('grantPermissionForNotifications').addEventListener('click', function () {
-        grantPermissionForNotifications();
-    });
-    document.getElementById('notifyMessage').addEventListener('change', function () {
-        updateNotificationMessage();
-    });
-
-   
-
-
     $('.clockpicker').clockpicker();
     loadSettings();
 });
@@ -95,29 +43,14 @@ function setBlockEvent(btnName, blockName) {
     blockList.forEach(element => {
         if (element === blockName) {
             document.getElementById(blockName).hidden = false;
-        } else document.getElementById(element).hidden = true;
+        } else {
+            chrome.extension.getBackgroundPage().console.log(element);
+            document.getElementById(element).hidden = true;
+        }
     });
 }
 
 function loadSettings() {
-    storage.getValue(SETTINGS_INTERVAL_INACTIVITY, function (item) {
-        document.getElementById('intervalInactivity').value = item;
-    });
-    storage.getValue(SETTINGS_INTERVAL_RANGE, function (item) {
-        document.getElementById('rangeToDays').value = item;
-    });
-    storage.getValue(SETTINGS_VIEW_TIME_IN_BADGE, function (item) {
-        document.getElementById('viewTimeInBadge').checked = item;
-    });
-    storage.getValue(SETTINGS_BLOCK_DEFERRAL, function (item) {
-        document.getElementById('blockDeferral').checked = item;
-    });
-    storage.getValue(SETTINGS_DARK_MODE, function (item) {
-        document.getElementById('darkMode').checked = item;
-    });
-    storage.getMemoryUse(STORAGE_TABS, function (integer) {
-        document.getElementById('memoryUse').innerHTML = (integer / 1024).toFixed(2) + 'Kb';
-    });
     storage.getValue(STORAGE_TABS, function (item) {
         let s = item;
     });
@@ -151,21 +84,8 @@ function loadSettings() {
             notifyList = [];
         viewNotificationList(items);
     });
-    storage.getValue(STORAGE_NOTIFICATION_MESSAGE, function (mess) {
-        document.getElementById('notifyMessage').value = mess;
-    });
-    checkPermissionsForNotifications();
 }
 
-function checkPermissionsForNotifications() {
-    chrome.permissions.contains({
-        permissions: ["notifications"]
-    }, function (result) {
-        if (result) {
-            setUIForAnyPermissionForNotifications();
-        }
-    });
-}
 
 function loadVersion() {
     var version = chrome.runtime.getManifest().version;
