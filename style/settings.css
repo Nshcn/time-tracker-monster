@@ -1,3 +1,7 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 body {
     font-family: "Segoe UI", Tahoma, sans-serif !important;
     color: #262626;
@@ -59,6 +63,7 @@ a {
 
 label{
     font-size: 14px;
+    font-family: fantasy;
 }
 
 [type="checkbox"]:not(:checked),[type="checkbox"]:checked {
@@ -66,6 +71,44 @@ label{
     opacity: 0;
     pointer-events: none
 }
+.team-name{
+
+}
+
+.team-info{
+    width: 650px;
+    padding: 10px;
+    margin-left: -20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.team-info .team-member-info{
+    margin: 10px;
+    width: 300px;    
+    height: 120px;
+    background: floralwhite;
+    border: 1px solid rgb(172, 169, 169);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+ .member-photo{
+     margin: 10px;
+     overflow: hidden;
+     border: 1px solid rgb(172, 169, 169);
+     border-radius: 5px;
+     flex: 30%;
+ }
+ .member-photo img{
+    height: 100px;
+    margin-left: -15px;
+ }
+ .member-intro{
+     padding: 20px;
+     flex: 70%;
+}
+
 
 [type="checkbox"]+span {
     position: relative;
@@ -161,7 +204,7 @@ label{
 }
 
 input[type="button"]{
-    background: #3477db;
+    background: #97D0D2;
     color: #fff;
     border-radius: 3px;
     height: 35px;
@@ -217,6 +260,9 @@ input[type="button"]:hover {
     position: relative;
     display: inline-block;
   }
+  .tooltip img{
+      vertical-align: sub;
+  }
   
   /* Tooltip text */
   .tooltip .tooltiptext {
@@ -270,20 +316,37 @@ input[type="button"]:hover {
       overflow-y: auto;
       width: 350px;
       height: 120px;
-      padding: 3px;
-      padding: 3px 5px 3px 5px;
+      background: floralwhite;
+      /* padding: 3px; */
+      /* padding: 3px 5px 3px 5px; */
       border: 1px solid rgb(172, 169, 169);
+      border-radius: 10px;
+  }
+  .listbox .list-box-li{
+    padding: 3px;
+    padding-left: 8px;
+  }
+  .listbox .list-box-li:hover{
+      background: #fff1b1;
+      color: #2ed2d3;
+  }
+
+  .add-list-lbl{
+    width: 321px;
+    height: 15px;
+    padding: 3px;
+  }
+  .add-list-btn{
+    height: 24px !important;
+    line-height: 20px !important;
+    padding: 0 5px !important;
+    min-width: 20px !important;
+    width: 28px !important;
   }
 
   .listbox img{
       float: right;
       cursor: pointer;
-  }
-
-  #addBlackSiteLbl{
-      width: 321px;
-      height: 15px;
-      padding: 3px;
   }
 
   #addBlackSiteBtn{

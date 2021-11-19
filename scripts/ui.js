@@ -55,7 +55,6 @@ class UI {
             }
         });
         div.addEventListener('mouseout', function () {
-            chrome.extension.getBackgroundPage().console.log('ddd')
             if (document.getElementById('chart-container').innerHTML !== '') {
                 var item = document.getElementById(tab.url);
                 if (item !== null) {

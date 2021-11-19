@@ -28,6 +28,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addBadSiteBtn').addEventListener('click', function () {
         addNewSiteClickHandler('addBadSiteLbl', null, actionAddBadSiteToList, 'notifyForBlackList');
     });
+
+// 点我点我点我
+document.getElementById('pick-me').addEventListener('click', function () {
+    alert('你可真帅啊！');
+});
+
+
     $('.clockpicker').clockpicker();
     loadSettings();
 });
@@ -103,6 +110,7 @@ function viewList(items,list,listType) {
 function addDomainToListBox(domain, list, listType) {
     var li = document.createElement('li');
     li.innerText = domain;
+    li.classList.add('list-box-li');
     var del = document.createElement('img');
     del.height = 12;
     del.src = '/icons/delete.png';

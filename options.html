@@ -17,7 +17,7 @@
 <body>
     <div class="content">
         <div class="header">
-            <p class="title">Web Activity Time Tracker</p>
+            <p class="title" style="margin:50px 0;">Web Time Tracker Monster</p>
         </div>
         <div id='nav' class="nav">
             <a id='settingsBtn' class="active">Settings</a>
@@ -28,81 +28,106 @@
             <div id='settingsBlock'>
                 <div class="margin-top-10">
                     <div class="margin-top-10">
-                        <label>Ignored list of domain: </label>
-                        <div class="tooltip"><img src="/icons/information.svg" height="18" />
+                        <label>List Of Ignored Domain: </label>
+                        <div class="tooltip"><img src="/icons/information.png" height="18" />
                             <span class="tooltiptext">Activity for these domains not will tracked</span>
                         </div>
                         <div class="margin-top-10">
                             <ul id='blackList' class="listbox" size="7"></ul>
                         </div>
                         <div class="margin-top-10">
-                            <input type="text" placeholder="Enter site name..." id='addBlackSiteLbl' />
-                            <input type="button" value="+" id='addBlackSiteBtn' />
+                            <input type="text" placeholder="Enter site name..." id='addBlackSiteLbl' class="add-list-lbl" />
+                            <input type="button" value="+" id='addBlackSiteBtn'  class="add-list-btn"/>
                         </div>
                         <div class="notify warning" id='notifyForBlackList' hidden>
                             The site is already in the list
                         </div>
                     </div>
                     <div class="margin-top-10">
-                        <label>Good domain: </label>
-                        <div class="tooltip"><img src="/icons/information.svg" height="18" />
+                        <label>List Of Good Domain: </label>
+                        <div class="tooltip"><img src="/icons/information.png" height="18" />
                             <span class="tooltiptext">浏览网站可以增加金币</span>
                         </div>
                         <div class="margin-top-10">
                             <ul id='goodList' class="listbox" size="7"></ul>
                         </div>
                         <div class="margin-top-10">
-                            <input type="text" placeholder="Enter site name..." id='addGoodSiteLbl' />
-                            <input type="button" value="+" id='addGoodSiteBtn' />
+                            <input type="text" placeholder="Enter site name..." id='addGoodSiteLbl'  class="add-list-lbl" />
+                            <input type="button" value="+" id='addGoodSiteBtn'   class="add-list-btn" />
                         </div>
                     </div>
                     <div class="margin-top-10">
-                        <label>Bad domain: </label>
-                        <div class="tooltip"><img src="/icons/information.svg" height="18" />
+                        <label>List Of Bad Domain: </label>
+                        <div class="tooltip"><img src="/icons/information.png" height="18" />
                             <span class="tooltiptext">浏览网站会减少金币</span>
                         </div>
                         <div class="margin-top-10">
                             <ul id='badList' class="listbox" size="7"></ul>
                         </div>
                         <div class="margin-top-10">
-                            <input type="text" placeholder="Enter site name..." id='addBadSiteLbl' />
-                            <input type="button" value="+" id='addBadSiteBtn' />
+                            <input type="text" placeholder="Enter site name..." id='addBadSiteLbl'  class="add-list-lbl" />
+                            <input type="button" value="+" id='addBadSiteBtn'  class="add-list-btn" />
                         </div>
                     </div>
                 </div>
             </div>
             <div id='aboutBlock' hidden>
-                <div><label id='version'></label></div>
-                <div class="margin-top-20"><label>GitHub: <a
-                            href="https://github.com/Stigmatoz/web-activity-time-tracker"
-                            target="_blank">github.com/Stigmatoz/web-activity-time-tracker</a></label>
+                <div>Version: </label><label id='version'></label></div>
+                <div class="margin-top-20"><br>
+                    Hello，我们的TEAM名字叫<span class="team-name">对对兑怼怼队</span>，一定要pick我们呀~ </br>
+                    <img src="./icons/github.png" style="width: 20px;height:20px">
+                    <a href="https://github.com/Nshcn/time-tracker-monster" target="_blank">github.com/Nshcn/time-tracker-monster</a></label>
                 </div>
-                <div class="margin-top-20"><label>If you have feedback or would like to report an issue, you can do so
-                        on
-                        the <a href="https://github.com/Stigmatoz/web-activity-time-tracker/issues"
-                            target="_blank">GitHub
-                            issues page</a></label>
-                </div>
-                <div class="margin-top-20">
-                    <label>If experiencing problems, having questions or suggestions, please fill out <a
-                            href="https://chrome.google.com/webstore/detail/web-activity-time-tracker/hhfnghjdeddcfegfekjeihfmbjenlomm/support"
-                            target="_blank">support
-                            form</a>.</label>
-                </div>
-                <div class="margin-top-20">
-                    <label>Do you enjoy using Web Activity Time Tracker? <a
-                            href="https://chrome.google.com/webstore/detail/web-activity-time-tracker/hhfnghjdeddcfegfekjeihfmbjenlomm/reviews"
-                            target="_blank">Let me know!</a></label>
+                <div class="team-info">
+                    <div class="team-member-info">
+                        <div class="member-photo">
+                            <img src="./icons/jingyu.jpg" alt="">
+                        </div>
+                        <div class="member-intro">
+                            李正杰，爱吃饭
+                        </div>
+                    </div>
+                    <div class="team-member-info">
+                        <div class="member-photo">
+                            <img src="./icons/nshcn.jpg" alt="">
+                        </div>
+                        <div class="member-intro">
+                            占文庆，爱睡觉
+                        </div>
+                    </div>
+                    <div class="team-member-info">
+                        <div class="member-photo">
+                            <img src="./icons/qihao.jpg" alt="">
+                        </div>
+                        <div class="member-intro">
+                            孙琦淏，爱学习
+                        </div>
+                    </div>
+                    <div class="team-member-info">
+                        <div class="member-photo">
+                            <img src="./icons/xiongmao.jpg" alt="">
+                        </div>
+                        <div class="member-intro">
+                            张经涛，爱打豆豆
+                        </div>
+                    </div>
+                    <div class="team-member-info">
+                        <div class="member-photo">
+                            <img src="" alt="">
+                        </div>
+                        <div class="member-intro">
+                            杜佳佳，我是豆豆
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id='donateBlock' hidden>
                 <div>
-                    <label>You can support Web Activity Time Tracker by donating:</label>
-                    <div class="margin-top-20">
+                    <label>如果好用的话，欢迎奖赏呀</label>
+                    <div class="margin-top-20" id="pick-me">
                         <div class="inline-block">
-                            <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/webtracker"><img
-                                    src="/icons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span>Buy me a
-                                    coffee</span></a>
+                            <a class="bmc-button" href="#"><img
+                                    src="/icons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span>点我，点我，点我</span></a>
                         </div>
                     </div>
                 </div>
