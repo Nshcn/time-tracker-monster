@@ -49,9 +49,13 @@
             <div id="statisticChart">
                 <div class="chart-nav">
                     <div id="btnTodayStatistics" class="btn-toggle-chart">
-                        <img src="./icons/clock.png" style="width: 20px;height:20px">
-                        TODAY</div>
-                    <div id="btnAllStatistics" class="btn-toggle-chart">ALL-TIME</div>
+                        <img src="./icons/clock.png" class="chart-type-img">
+                        TODAY
+                    </div>
+                    <div id="btnAllStatistics" class="btn-toggle-chart">
+                        <img src="./icons/calendar.png" class="chart-type-img">
+                        ALL-TIME
+                    </div>
                 </div>
                 <div id="chart-container" style="width:100%;height:300px"></div>
             </div>
@@ -160,7 +164,6 @@ body{
     background: #FEFEFE;
 }
 .chart-nav{
-    /* height: 45px; */
     background:  #95D0D2;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
@@ -172,7 +175,13 @@ body{
     display: flex;
     flex-direction: row;
 }
-.btn-toggle-chart{
+.chart-nav .chart-type-img{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.chart-nav .btn-toggle-chart{
     flex: 1;
 }
 #chart-container{

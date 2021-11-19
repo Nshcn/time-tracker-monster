@@ -278,6 +278,9 @@ class UI {
         this.drawRingChart(data);
         this.showTable();
     }
+    drawBarChart(data) {
+        
+    }
     drawRingChart(data) {
         var chartDom = document.getElementById('chart-container');
         var myChart = echarts.init(chartDom);
