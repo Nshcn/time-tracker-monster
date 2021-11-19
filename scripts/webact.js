@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("btnHatch").addEventListener('click' ,function(){
         document.getElementById("hatchFrame").src = "./pages/eggPage/index.html"
     })
+    // fight
     document.getElementById("btnBattle").addEventListener('click', function () {
         chrome.extension.getBackgroundPage().console.log('battle')
         document.getElementById("battleFrame").src = "./pages/fight/index.html"

@@ -113,6 +113,7 @@ function backgroundUpdateStorage() {
         storage.saveValue(STORAGE_TIMEINTERVAL_LIST, timeIntervalList);
     }
     storage.saveValue('coin', coin);
+    localStorage.setItem('coin',coin)
 }
 
 function setDefaultSettings() {
