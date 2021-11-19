@@ -21,6 +21,7 @@
         </div>
         <div id='nav' class="nav">
             <a id='settingsBtn' class="active">Settings</a>
+            <a id='petsBtn'>Pets</a>
             <a id='aboutBtn'>About</a>
             <a id='donateBtn'>Donate</a>
         </div>
@@ -130,6 +131,40 @@
                                     src="/icons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span>点我，点我，点我</span></a>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div id='petsBlock' hidden>
+                <div id="petsContainer">
+                    <template id='pet-tpl'>
+                        <div id='pet-box'>
+                            <img id="petimg" src="" alt="">
+                            <p><b id="petname"></b></p>
+                            <button id="petBtn"></button>
+                        </div>
+                        <style>
+                            #pet-box{
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                transform: scale(0.9);
+                                border-radius: 30px;
+                            }
+                            #pet-box:hover{
+                                transform: scale(1);
+                                box-shadow:1px 1px 2px #818181;
+                            }
+                            #petname{
+                                font-size: 20px;
+                            }
+                            #petBtn{
+                                width: 80px;
+                                border: 0;
+                                background-color: rgb(118, 193, 243);
+                                border-radius:15px;
+                                box-shadow: 1px 1px 2px #e3e3e3;
+                            }
+                        </style>
+                    </template>
                 </div>
             </div>
         </div>

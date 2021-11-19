@@ -1,4 +1,5 @@
 ! function(e) {
+    localStorage.setItem("level",localStorage.getItem("level")||1);
     function r(r) {
         for (var n, l, a = r[0], f = r[1], i = r[2], c = 0, s = []; c < a.length; c++) l = a[c], Object.prototype.hasOwnProperty.call(o, l) && o[l] && s.push(o[l][0]), o[l] = 0;
         for (n in f) Object.prototype.hasOwnProperty.call(f, n) && (e[n] = f[n]);
