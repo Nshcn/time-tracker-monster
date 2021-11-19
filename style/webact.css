@@ -22,11 +22,12 @@ body {
 
 .inline-flex:hover .span-url {
     font-size: 13px;
-    font-weight: 650;
+    color: coral;
+    /* font-weight: 650; */
 }
 
 .inline-flex:hover .span-time {
-    color: rgb(0, 0, 0);
+    color: coral;
 }
 
 .span-url {
@@ -60,7 +61,7 @@ body {
 }
 
 #total .span-time {
-    font-weight: 750;
+    /* font-weight: 750; */
     text-align: right;
 }
 
@@ -296,10 +297,10 @@ input[type='checkbox'] {
 /* Tooltip text */
 
 .tooltip .tooltiptext {
-    font-size: 11px;
-    font-weight: 500;
+    font-size: 10px;
+    /* font-weight: 500; */
     visibility: hidden;
-    width: 180px;
+    width: 80px;
     background-color: #555;
     color: #fff;
     text-align: center;
@@ -315,12 +316,12 @@ input[type='checkbox'] {
 }
 
 .visits.tooltip .tooltiptext {
-    width: 120px;
+    width: 80px;
     transform: translateX(-50%) translateY(-120%);
 }
 
 .current-url.tooltip .tooltiptext {
-    width: 120px;
+    width: 80px;
     transform: translateX(-50%) translateY(-120%);
 }
 

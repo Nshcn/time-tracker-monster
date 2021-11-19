@@ -11,6 +11,16 @@ var setting_range_days;
 var setting_dark_mode;
 var restrictionList;
 
+function toggleActive(arr, self, className) {
+    arr.forEach(ele => {
+        if (ele == self) {
+            document.getElementById(self).classList.add(className);
+        } else {
+            document.getElementById(ele).classList.remove(className);
+        }
+    });    
+}
+let navBtnArr = ['btnHatch', 'btnStatistics', 'btnBattle', 'btnSettings'];
 
 document.addEventListener('DOMContentLoaded', function () {
     // ui.setPreloader();
@@ -22,16 +32,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //导航栏按钮
     document.getElementById('btnStatistics').addEventListener('click', function () {
+        toggleActive(navBtnArr, 'btnStatistics', 'main-nav-active');
         currentTypeOfList = TypeListEnum.ToDay;
-        ui.showStatisticsPage();
+        // ui.showStatisticsPage();
+        ui.showPage('Statistics');
     });
     document.getElementById('btnHatch').addEventListener('click', function () {
-        ui.showHatchPage();
+        toggleActive(navBtnArr, 'btnHatch', 'main-nav-active');
+        ui.showPage('Hatch');
+        // ui.showHatchPage();
+        document.getElementById("hatchFrame").src = "./pages/eggPage/index.html"
     });
     document.getElementById('btnBattle').addEventListener('click', function () {
-        ui.showBattlePage();
+        toggleActive(navBtnArr, 'btnBattle', 'main-nav-active');
+        ui.showPage('Battle');
+        // ui.showBattlePage();
     });
     document.getElementById('btnSettings').addEventListener('click', function () {
+        toggleActive(navBtnArr, 'btnSettings', 'main-nav-active');
         if (chrome.runtime.openOptionsPage) {
             chrome.runtime.openOptionsPage();
         } else {
@@ -59,7 +77,7 @@ function firstInitPage() {
 
         tabsFromBackground = bg.tabs;
         currentTypeOfList = TypeListEnum.ToDay;
-        ui.showAllStatistic();
+        ui.showTodayStatistic();
     });
 }
 

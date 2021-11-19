@@ -34,9 +34,9 @@ class UI {
             p.innerHTML = 'Today (' + counterOfSite + ' sites) <br> <strong>' + convertShortSummaryTimeToLongString(totalTime) + '</strong>';
         if (currentTypeOfList === TypeListEnum.All && totalDays !== undefined) {
             if (totalDays.countOfDays > 0) {
-                p.innerHTML = 'Aggregate data since ' + new Date(totalDays.minDate).toLocaleDateString() + ' (' + totalDays.countOfDays + ' days) (' + counterOfSite + ' sites) <br> <strong>' + fillSummaryTime(totalTime)  + '</strong>';
+                p.innerHTML = '数据开始自 ' + new Date(totalDays.minDate).toLocaleDateString() + ' (' + totalDays.countOfDays + ' days) (' + counterOfSite + ' sites) <br> <strong>' + fillSummaryTime(totalTime)  + '</strong>';
             } else {
-                p.innerHTML = 'Aggregate data since ' + new Date().toLocaleDateString() + ' (' + counterOfSite + ' sites) <br>  <strong>' + convertShortSummaryTimeToLongString(totalTime)  + '</strong>';
+                p.innerHTML = '数据开始自 ' + new Date().toLocaleDateString() + ' (' + counterOfSite + ' sites) <br>  <strong>' + convertShortSummaryTimeToLongString(totalTime)  + '</strong>';
             }
         }
 
@@ -54,7 +54,8 @@ class UI {
                 }
             }
         });
-        div.addEventListener('mouseout', function() {
+        div.addEventListener('mouseout', function () {
+            chrome.extension.getBackgroundPage().console.log('ddd')
             if (document.getElementById('chart-container').innerHTML !== '') {
                 var item = document.getElementById(tab.url);
                 if (item !== null) {
@@ -192,32 +193,10 @@ class UI {
         document.getElementById('preloader').classList.add('hide');
     }
 
-
-    //显示四个页面
-    showStatisticsPage() {
-        document.getElementById('pageStatistics').classList.add('active');
-        document.getElementById('pageHatch').classList.remove('active');
-        document.getElementById('pageBattle').classList.remove('active');
-        document.getElementById('pageSettings').classList.remove('active');
-        this.showTodayStatistic();
-    }
-    showHatchPage() {
-        document.getElementById('pageStatistics').classList.remove('active');
-        document.getElementById('pageHatch').classList.add('active');
-        document.getElementById('pageBattle').classList.remove('active');
-        document.getElementById('pageSettings').classList.remove('active');
-    }
-    showBattlePage() {
-        document.getElementById('pageStatistics').classList.remove('active');
-        document.getElementById('pageHatch').classList.remove('active');
-        document.getElementById('pageBattle').classList.add('active');
-        document.getElementById('pageSettings').classList.remove('active');
-    }
-    showSettingsPage() {
-        document.getElementById('pageStatistics').classList.remove('active');
-        document.getElementById('pageHatch').classList.remove('active');
-        document.getElementById('pageBattle').classList.remove('active');
-        document.getElementById('pageSettings').classList.add('active');
+    pageArr = ['pageStatistics', 'pageHatch', 'pageBattle', 'pageSettings'];
+    //显示页面
+    showPage(pageType) {
+        toggleActive(this.pageArr, `page${pageType}`, 'active');
     }
     showTodayStatistic() {
         currentTypeOfList = TypeListEnum.ToDay;

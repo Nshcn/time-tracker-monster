@@ -1,0 +1,7 @@
+#fight-container {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    background-color: antiquewhite;
+}

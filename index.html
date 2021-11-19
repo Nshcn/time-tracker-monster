@@ -21,11 +21,11 @@
    </svg>
 -->
 <div class="container">
-    <div class="title">
-        <p>Web Time Tracker Monster</p>
+    <div class="title" style="background: #343436;margin: 0;">
+        <p style="color: #fff;">Web Time Tracker Monster</p>
     </div>
     <div class="main-nav">
-        <div id="btnStatistics">统计</div>
+        <div id="btnStatistics" class="main-nav-active">统计</div>
         <div id="btnHatch">孵蛋</div>
         <div id="btnBattle">战斗</div>
         <div id="btnSettings">设置</div>
@@ -41,7 +41,9 @@
             </div>
             <div id="statisticTable"></div>
         </div>
-        <div id="pageHatch">hatch</div>
+        <div id="pageHatch" style="display: none;">
+            <iframe id="hatchFrame" src="" width="500px" frameborder="0" height="500px"></iframe>
+        </div>
         <div id="pageBattle">battle</div>
         <div id="pageSettings">设置</div>
     </div>
@@ -56,9 +58,14 @@
 <script src="scripts/webact.js"></script>
 
 <style>
+*{
+    margin: 0;
+    padding: 0;
+}
 .container{
     width: 500px;
     height:500px;
+    padding-right: 7px;
 }
 .container .title{
     font-size:14px;
@@ -67,8 +74,15 @@
 }
 .main-nav {
     width: 100%;
-    height:50px;
+    height:25px;
+    line-height: 25px;
+    background: #343436;
     display: flex;
+    color: #fff;
+}
+.main-nav-active{
+    background-color: #fff;
+    color:#343436;
 }
 .main-nav div{
     flex: 1;
