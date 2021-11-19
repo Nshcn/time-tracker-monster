@@ -13,12 +13,12 @@ body {
     grid-template-areas: 'h h' 'n m';
 }
 
-.title{
+.title {
     font-size: 23px;
     font-weight: 650;
 }
 
-.header{
+.header {
     grid-area: h;
     margin: 0 0 10px;
     font-size: 20px;
@@ -30,7 +30,7 @@ a {
     cursor: pointer;
 }
 
-.nav{
+.nav {
     grid-area: n;
     border-right: 1px solid #ddd;
     padding-right: 15px;
@@ -57,11 +57,12 @@ a {
     font-weight: bold;
 }
 
-label{
+label {
     font-size: 14px;
 }
 
-[type="checkbox"]:not(:checked),[type="checkbox"]:checked {
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
     position: absolute;
     opacity: 0;
     pointer-events: none
@@ -81,7 +82,8 @@ label{
     user-select: none
 }
 
-[type="checkbox"]+span:before,[type="checkbox"]:not(.filled-in)+span:after {
+[type="checkbox"]+span:before,
+[type="checkbox"]:not(.filled-in)+span:after {
     content: '';
     position: absolute;
     top: 0;
@@ -96,19 +98,20 @@ label{
 
 [type="checkbox"]:not(:checked):disabled+span:before {
     border: none;
-    background-color: rgba(0,0,0,0.42)
+    background-color: rgba(0, 0, 0, 0.42)
 }
 
 [type="checkbox"]:checked:disabled+span:before {
-    border-right: 2px solid rgba(0,0,0,0.42);
-    border-bottom: 2px solid rgba(0,0,0,0.42)
+    border-right: 2px solid rgba(0, 0, 0, 0.42);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.42)
 }
 
 [type="checkbox"].filled-in+span:after {
     border-radius: 2px
 }
 
-[type="checkbox"].filled-in+span:before,[type="checkbox"].filled-in+span:after {
+[type="checkbox"].filled-in+span:before,
+[type="checkbox"].filled-in+span:after {
     content: '';
     left: 0;
     position: absolute;
@@ -160,7 +163,7 @@ label{
     z-index: 0
 }
 
-input[type="button"]{
+input[type="button"] {
     background: #3477db;
     color: #fff;
     border-radius: 3px;
@@ -179,24 +182,23 @@ input[type="button"]{
 input[type="button"]:hover {
     background: #5c9dfe;
     text-decoration: none;
-  }
+}
 
-  
-  input[type="button"][disabled]{
+input[type="button"][disabled] {
     border: 1px solid #999999;
     background-color: #cccccc;
     color: #666666;
-  }
+}
 
-.margin-top-10{
-      margin-top: 10px;
-  }
+.margin-top-10 {
+    margin-top: 10px;
+}
 
-.margin-top-20{
+.margin-top-20 {
     margin-top: 20px;
 }
 
-.margin-left-5{
+.margin-left-5 {
     margin-left: 5px;
 }
 
@@ -216,10 +218,12 @@ input[type="button"]:hover {
 .tooltip {
     position: relative;
     display: inline-block;
-  }
-  
-  /* Tooltip text */
-  .tooltip .tooltiptext {
+}
+
+
+/* Tooltip text */
+
+.tooltip .tooltiptext {
     visibility: hidden;
     width: 150px;
     background-color: #555;
@@ -227,28 +231,28 @@ input[type="button"]:hover {
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-  
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     transform: translateX(-50%) translateY(-150%);
-  
     /* Fade in tooltip */
     opacity: 0;
     transition: opacity 0.3s;
-  }
-  
-  /* Show the tooltip text when you mouse over the tooltip container */
-  .tooltip:hover .tooltiptext {
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
-  }
+}
 
-  .hidden{
-      display: none !important;
-  }
+.hidden {
+    display: none !important;
+}
 
-  .notify{
+.notify {
     width: 220px;
     height: 27px;
     margin: auto;
@@ -264,94 +268,94 @@ input[type="button"]:hover {
     font-size: 15px;
     white-space: nowrap;
     padding: 10px;
-  }
+}
 
-  .listbox{
-      overflow-y: auto;
-      width: 350px;
-      height: 120px;
-      padding: 3px;
-      padding: 3px 5px 3px 5px;
-      border: 1px solid rgb(172, 169, 169);
-  }
+.listbox {
+    overflow-y: auto;
+    width: 350px;
+    height: 120px;
+    padding: 3px;
+    padding: 3px 5px 3px 5px;
+    border: 1px solid rgb(172, 169, 169);
+}
 
-  .listbox img{
-      float: right;
-      cursor: pointer;
-  }
+.listbox img {
+    float: right;
+    cursor: pointer;
+}
 
-  #addBlackSiteLbl{
-      width: 321px;
-      height: 15px;
-      padding: 3px;
-  }
+#addBlackSiteLbl {
+    width: 321px;
+    height: 15px;
+    padding: 3px;
+}
 
-  #addBlackSiteBtn{
+#addBlackSiteBtn {
     height: 24px !important;
     line-height: 20px !important;
     padding: 0 5px !important;
     min-width: 20px !important;
     width: 28px !important;
-  }
+}
 
-  .label-with-list{
+.label-with-list {
     width: 333px;
     height: 15px;
     padding: 3px;
 }
 
-.btn-with-list{
-  height: 24px !important;
-  line-height: 20px !important;
-  padding: 0 5px !important;
-  min-width: 20px !important;
-  width: 28px !important;
+.btn-with-list {
+    height: 24px !important;
+    line-height: 20px !important;
+    padding: 0 5px !important;
+    min-width: 20px !important;
+    width: 28px !important;
 }
 
-.list{
+.list {
     width: 440px;
     height: 250px;
 }
 
-.clock{
+.clock {
     width: 65px;
     height: 15px;
     padding: 3px;
 }
 
-.clock-li-readonly{
+.clock-li-readonly {
     border: none;
     margin-left: -3px;
 }
 
-.inline-block{
+.inline-block {
     display: inline-block !important;
 }
 
-.block{
+.block {
     display: block;
 }
 
-.readonly-input{
+.readonly-input {
     cursor: default;
     border: 0;
     display: block;
 }
 
-.element-item{
+.element-item {
     width: 380px;
     font-weight: 600;
 }
 
-.notify.warning{
+.notify.warning {
     background-color: rgb(219, 93, 104);
 }
 
-.notify-width-300{
+.notify-width-300 {
     width: 300px !important;
 }
 
-.button{
+.button {
     background: #FF813F;
     color: #fff;
     border-radius: 3px;
@@ -371,14 +375,14 @@ input[type="button"]:hover {
     box-shadow: none !important;
     border: none !important;
     vertical-align: middle !important;
- }
+}
 
- .bmc-button span{
-    margin-left:15px;
-    font-size:15px !important;
- }
+.bmc-button span {
+    margin-left: 15px;
+    font-size: 15px !important;
+}
 
- .bmc-button {
+.bmc-button {
     padding: 15px 25px 18px 18px !important;
     line-height: 35px !important;
     height: 51px !important;
@@ -390,14 +394,14 @@ input[type="button"]:hover {
     border: 1px solid transparent !important;
     margin: 0 auto !important;
     box-sizing: border-box !important;
- }
+}
 
 .button:hover,
 .button:active,
 .button:focus,
 .bmc-button:hover,
 .bmc-button:active,
-.bmc-button:focus{
+.bmc-button:focus {
     -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
     text-decoration: none !important;
     box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
@@ -405,56 +409,65 @@ input[type="button"]:hover {
     color: #FFFFFF !important;
 }
 
-.setting-notify-block{
+.setting-notify-block {
     width: 450px;
     height: 100px;
     margin-top: 15px;
     background-color: rgb(71, 69, 69);
 }
 
-.setting-notify-block .setting-notify-title{
+.setting-notify-block .setting-notify-title {
     padding: 15px 20px 5px 0;
     font-weight: 700;
-    color:#FFFFFF;
+    color: #FFFFFF;
     font-size: 15px;
     text-align: left;
     display: block;
 }
 
-.setting-notify-block .setting-notify-message{
+.setting-notify-block .setting-notify-message {
     padding: 3px 20px 5px 0;
     font-size: 14px;
     display: block;
     width: 320px;
 }
-.setting-notify-block .setting-notify-message-g{
+
+.setting-notify-block .setting-notify-message-g {
     padding: 0 30px 5px 0;
-    color:rgb(199, 199, 199);
+    color: rgb(199, 199, 199);
     font-size: 11px;
     display: block;
 }
 
-.setting-notify-block .setting-notify-img{
+.setting-notify-block .setting-notify-img {
     height: 50px;
     padding: 25px 15px 25px 25px;
 }
 
-.setting-notify-block .setting-notify-message-block{
+.setting-notify-block .setting-notify-message-block {
     display: inline-block;
     position: absolute;
 }
 
-.bold{
+.bold {
     font-weight: 650;
 }
 
-.site-name{
+.site-name {
     display: inline-block;
     width: 100px;
 }
 
-.permission-btn{
+.permission-btn {
     height: 25px !important;
     line-height: 25px !important;
-    background-color:green !important;
+    background-color: green !important;
+}
+
+#petsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 50vw;
+    justify-content: space-around;
 }

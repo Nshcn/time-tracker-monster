@@ -4,8 +4,8 @@ var goodList = [];
 var badList = [];
 var restrictionList = [];
 var notifyList = [];
-var blockBtnList = ['settingsBtn', 'aboutBtn', 'donateBtn'];
-var blockList = ['settingsBlock', 'aboutBlock', 'donateBlock'];
+var blockBtnList = ['settingsBtn', 'petsBtn', 'aboutBtn', 'donateBtn'];
+var blockList = ['settingsBlock', 'petsBlock', 'aboutBlock', 'donateBlock'];
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('settingsBtn').addEventListener('click', function () {
@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     document.getElementById('donateBtn').addEventListener('click', function () {
         setBlockEvent('donateBtn', 'donateBlock');
+    });
+    //宠物按钮
+    document.getElementById('petsBtn').addEventListener('click', function () {
+        setBlockEvent('petsBtn', 'petsBlock');
     });
     document.getElementById('addBlackSiteBtn').addEventListener('click', function () {
         addNewSiteClickHandler('addBlackSiteLbl', null, actionAddBlackSiteToList, 'notifyForBlackList');
@@ -30,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     $('.clockpicker').clockpicker();
     loadSettings();
+    updatePetsList();
 });
 
 function setBlockEvent(btnName, blockName) {
@@ -58,19 +63,19 @@ function loadSettings() {
         if (items !== undefined)
             blackList = items;
         else blackList = [];
-        viewList(items,blackList,'blackList');
+        viewList(items, blackList, 'blackList');
     });
     storage.getValue('good_list', function (items) {
         if (items !== undefined)
             goodList = items;
         else badList = [];
-        viewList(items,goodList,'goodList');
+        viewList(items, goodList, 'goodList');
     });
     storage.getValue('bad_list', function (items) {
         if (items !== undefined)
             badList = items;
         else badList = [];
-        viewList(items,badList,'badList');
+        viewList(items, badList, 'badList');
     });
     storage.getValue(STORAGE_RESTRICTION_LIST, function (items) {
         restrictionList = items;
@@ -92,10 +97,10 @@ function loadVersion() {
     document.getElementById('version').innerText = 'v' + version;
 }
 
-function viewList(items,list,listType) {
+function viewList(items, list, listType) {
     if (items !== undefined) {
         for (var i = 0; i < items.length; i++) {
-            addDomainToListBox(items[i],list,listType);
+            addDomainToListBox(items[i], list, listType);
         }
     }
 }
@@ -107,12 +112,12 @@ function addDomainToListBox(domain, list, listType) {
     del.height = 12;
     del.src = '/icons/delete.png';
     del.addEventListener('click', function (e) {
-        deleteSite(e,list,listType);
+        deleteSite(e, list, listType);
     });
     document.getElementById(listType).appendChild(li).appendChild(del);
 }
 
-function deleteSite(e,list,listType) {
+function deleteSite(e, list, listType) {
     var targetElement = e.path[1];
     list.splice(list.indexOf(targetElement.innerText), 1);
     document.getElementById(listType).removeChild(targetElement);
@@ -229,8 +234,8 @@ function viewNotify(elementName) {
 
 
 function actionAddBlackSiteToList(newSite) {
-    if (!isContainsSite(newSite,blackList)) {
-        addDomainToListBox(newSite,blackList,'blackList');
+    if (!isContainsSite(newSite, blackList)) {
+        addDomainToListBox(newSite, blackList, 'blackList');
         if (blackList === undefined)
             blackList = [];
         blackList.push(newSite);
@@ -240,8 +245,8 @@ function actionAddBlackSiteToList(newSite) {
     } else return false;
 }
 function actionAddGoodSiteToList(newSite) {
-    if (!isContainsSite(newSite,goodList)) {
-        addDomainToListBox(newSite,goodList,'goodList');
+    if (!isContainsSite(newSite, goodList)) {
+        addDomainToListBox(newSite, goodList, 'goodList');
         if (goodList === undefined) {
             goodList = [];
         }
@@ -254,8 +259,8 @@ function actionAddGoodSiteToList(newSite) {
     } else return false;
 }
 function actionAddBadSiteToList(newSite) {
-    if (!isContainsSite(newSite,badList)) {
-        addDomainToListBox(newSite,badList,'badList');
+    if (!isContainsSite(newSite, badList)) {
+        addDomainToListBox(newSite, badList, 'badList');
         if (badList === undefined) {
             badList = [];
         }
@@ -403,7 +408,7 @@ function isContainsNotificationSite(domain) {
     return notifyList.find(x => x.domain == domain) != undefined;
 }
 
-function isContainsSite(domain,list) {
+function isContainsSite(domain, list) {
     return list.find(x => x == domain) != undefined;
 }
 
@@ -440,4 +445,71 @@ function updateNotificationList() {
 
 function updateNotificationMessage() {
     storage.saveValue(STORAGE_NOTIFICATION_MESSAGE, document.getElementById('notifyMessage').value);
+}
+// function updatePetsList() {
+//     let activeID = localStorage.getItem("activeID");
+//     let petsContainer = document.getElementById("petsContainer");
+//     let pets = JSON.parse(localStorage.getItem('pets'));
+//     petsContainer.addEventListener('click', setActiveID);
+//     for (let petID in pets) {
+//         let pet = pets[petID]
+//         let petDiv = document.createElement("div");
+//         petDiv.className = "pet-box";
+//         let petImage = document.createElement("img");
+//         petImage.src = pet.dataURL;
+//         let petName = document.createElement("b");
+//         petName.innerText = pet.name || "your pet";
+//         let petGoButton = document.createElement("button");
+//         petGoButton.innerText = petID === activeID ? "已上场" : "上场";
+//         petGoButton.disabled = petID === activeID;
+//         petGoButton.id = petID;
+//         petGoButton.className = 'petGoBtn';
+//         for (let item of [petImage, petName, petGoButton]) {
+//             petDiv.appendChild(item);
+//         }
+//         petsContainer.appendChild(petDiv);
+//     }
+// }
+function updatePetsList() {
+    let activeID = localStorage.getItem("activeID");
+    let petsContainer = document.getElementById("petsContainer");
+    let pets = JSON.parse(localStorage.getItem('pets'));
+    petsContainer.addEventListener("click",changGoPet)
+    for(let petID in  pets){
+        let pet = pets[petID];
+        let petbox = document.createElement("pet-box");
+        let petGoButton = petbox.shadowRoot.querySelector("#petBtn");
+        let petImg = petbox.shadowRoot.querySelector("#petimg");
+        let petName = petbox.shadowRoot.querySelector("#petname");
+        petGoButton.innerText = petID === activeID ? "已上场" : "上场";
+        petGoButton.disabled = petID === activeID ;
+        petImg.src = pet.dataURL;
+        petGoButton.dataid = petID;
+        petName.innerHTML = pet.name||"your pet";
+        petsContainer.append(petbox);
+    }
+    
+}
+class petElement extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({mode: 'open'});
+        const template = document.getElementById("pet-tpl");
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+    }
+}
+customElements.define("pet-box", petElement);
+
+function changGoPet(e){
+    if(e.path[0].id !== 'petBtn')
+    return;
+    let petsContainer = document.getElementById("petsContainer");
+    let boxes = petsContainer.getElementsByTagName("pet-box");
+    for(let box of boxes){
+        box.shadowRoot.querySelector("#petBtn").innerHTML = "上场";
+        box.shadowRoot.querySelector("#petBtn").disabled = false;
+    }
+    e.target.shadowRoot.querySelector("#petBtn").innerHTML = "已上场";
+    e.target.shadowRoot.querySelector("#petBtn").disabled = true;
+    localStorage.setItem("activeID",e.target.shadowRoot.querySelector("#petBtn").dataid);
 }
