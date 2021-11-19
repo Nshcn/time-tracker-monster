@@ -6,6 +6,7 @@
     <title>Web Activity Time Tracker</title>
     <link href="style/webact.css" rel="stylesheet" />
     <link href="style/chart.css" rel="stylesheet" />
+    <link href="style/iconfont.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -21,20 +22,35 @@
    </svg>
 -->
 <div class="container">
-    <div class="title" style="background: #343436;margin: 0;">
-        <p style="color: #fff;">Web Time Tracker Monster</p>
+    <div class="title">
+        <img src="./icons/dinosaur.png" alt="">
+        <p>Web Time Tracker Monster</p>
     </div>
     <div class="main-nav">
-        <div id="btnStatistics" class="main-nav-active">统计</div>
-        <div id="btnHatch">孵蛋</div>
-        <div id="btnBattle">战斗</div>
-        <div id="btnSettings">设置</div>
+        <div id="btnStatistics" class="main-nav-active">
+            <span class="icon iconfont">&#xe855;</span>
+            <span>Statistics</span>
+        </div>
+        <div id="btnHatch">
+            <span class="icon iconfont">&#xe633;</span>
+            <span>Egg</span>
+        </div>
+        <div id="btnBattle">
+            <span class="icon iconfont">&#xe62f;</span>
+            <span>Fight</span>
+        </div>
+        <div id="btnSettings">
+            <span class="icon iconfont">&#xf018f;</span>
+            <span>Settings</span>
+        </div>
     </div>
     <div class="main">
         <div id="pageStatistics" class="active">
             <div id="statisticChart">
                 <div class="chart-nav">
-                    <div id="btnTodayStatistics" class="btn-toggle-chart">TODAY</div>
+                    <div id="btnTodayStatistics" class="btn-toggle-chart">
+                        <img src="./icons/clock.png" style="width: 20px;height:20px">
+                        TODAY</div>
                     <div id="btnAllStatistics" class="btn-toggle-chart">ALL-TIME</div>
                 </div>
                 <div id="chart-container" style="width:100%;height:300px"></div>
@@ -58,6 +74,12 @@
 <script src="scripts/webact.js"></script>
 
 <style>
+html{
+    overflow-y: overlay;
+}
+body{
+    background: #95D0D2;
+}
 *{
     margin: 0;
     padding: 0;
@@ -65,61 +87,94 @@
 .container{
     width: 500px;
     height:500px;
-    padding-right: 7px;
+    padding-right: 10px;
 }
 .container .title{
-    font-size:14px;
+    font-size:15px;
     font-weight: bold;
     color: black;
+    margin: 15px;
 }
 .main-nav {
     width: 100%;
     height:25px;
     line-height: 25px;
-    background: #343436;
+    /* background: #343436; */
     display: flex;
-    color: #fff;
+    font-size: 10px;
+    /* color: #fff; */
 }
-.main-nav-active{
-    background-color: #fff;
-    color:#343436;
+.main-nav .main-nav-active{
+    background: #fff;
+    color:black;
+    box-shadow: 0px -0.9px 0px -0.1px grey;
 }
 .main-nav div{
     flex: 1;
-    font-size: 15px;
     font-weight: bold;
     text-align: center;
+    background: black;
+    color:#fff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 .main{
     width: 100%;
-    /* height: 300px; */
-    border: 1px solid blue
+    background: #fff;
+    padding: 2px;
+    padding-top:10px;
 }
 .main>div{
     display: none;
 }
 #statisticChart{
-    display: flex;
-    width: 100%;
+    margin: 6px;
     height: 300px;
-    border: 1px solid yellow;
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 20%);
+}
+#statisticTable{
+    margin: 6px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 20%);
+    padding-bottom: 10px;
+}
+#statisticTable .table-header{
+    margin: 0px;
+    height: 45px;
+    line-height: 45px;
+    color:#fff;
+    border-radius: 0px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: #95D0D2;
+}
+.inline-flex:nth-child(even){
+    background: #EEF9FA;
+}
+.inline-flex:nth-child(odd){
+    background: #FEFEFE;
 }
 .chart-nav{
-    flex: 10%;
-    border: 1px solid black;
+    /* height: 45px; */
+    background:  #95D0D2;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-weight: bold;
+    color:#fff;
     display: flex;
+    flex-direction: row;
 }
 .btn-toggle-chart{
     flex: 1;
 }
 #chart-container{
-    flex: 90%;
-}
-.chart-nav{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    flex-grow: 0;
 }
 .main .active{
     display: block !important;

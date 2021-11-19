@@ -31,12 +31,12 @@ class UI {
         var p = document.createElement('p');
         p.classList.add('table-header');
         if (currentTypeOfList === TypeListEnum.ToDay)
-            p.innerHTML = 'Today (' + counterOfSite + ' sites) <br> <strong>' + convertShortSummaryTimeToLongString(totalTime) + '</strong>';
+            p.innerHTML = 'Today (' + counterOfSite + ' sites) <strong>' + convertShortSummaryTimeToLongString(totalTime) + '</strong>';
         if (currentTypeOfList === TypeListEnum.All && totalDays !== undefined) {
             if (totalDays.countOfDays > 0) {
-                p.innerHTML = '数据开始自 ' + new Date(totalDays.minDate).toLocaleDateString() + ' (' + totalDays.countOfDays + ' days) (' + counterOfSite + ' sites) <br> <strong>' + fillSummaryTime(totalTime)  + '</strong>';
+                p.innerHTML = 'Total: ' + new Date(totalDays.minDate).toLocaleDateString() + ' (' + totalDays.countOfDays + ' days) (' + counterOfSite + ' sites) <strong>' + fillSummaryTime(totalTime)  + '</strong>';
             } else {
-                p.innerHTML = '数据开始自 ' + new Date().toLocaleDateString() + ' (' + counterOfSite + ' sites) <br>  <strong>' + convertShortSummaryTimeToLongString(totalTime)  + '</strong>';
+                p.innerHTML = 'Total: ' + new Date().toLocaleDateString() + ' (' + counterOfSite + ' sites) <strong>' + convertShortSummaryTimeToLongString(totalTime)  + '</strong>';
             }
         }
 

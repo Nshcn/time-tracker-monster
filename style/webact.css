@@ -14,6 +14,7 @@ body {
 .inline-flex {
     display: flex;
     height: 23px;
+    color: #347A83;
 }
 
 .inline-flex:hover {
@@ -22,18 +23,17 @@ body {
 
 .inline-flex:hover .span-url {
     font-size: 13px;
-    color: coral;
+    color: #95D0D2;
     /* font-weight: 650; */
 }
 
 .inline-flex:hover .span-time {
-    color: coral;
+    color: #95D0D2;
 }
 
 .span-url {
     width: 320px;
     text-decoration: none;
-    color: rgb(0, 0, 0);
     font-size: 13px;
     cursor: pointer;
 }
@@ -80,13 +80,11 @@ body {
 
 .span-percentage {
     width:60px;
-    color: rgb(78, 78, 78);
     font-size: 11px;
 }
 
 .span-time {
     width: 150px;
-    color: #c5c3c3;
     font-weight: 700;
     text-align: right;
     margin-left: auto;
