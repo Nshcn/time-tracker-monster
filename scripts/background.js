@@ -170,6 +170,12 @@ function addListener() {
             if (key === STORAGE_BLACK_LIST) {
                 loadBlackList();
             }
+            if (key === 'good_list') {
+                loadGoodList();
+            }
+            if (key === 'bad_list') {
+                loadBadList();
+            }
             if (key === STORAGE_RESTRICTION_LIST) {
                 loadRestrictionList();
             }
