@@ -66,6 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
         currentTypeOfList = TypeListEnum.All;
         ui.showAllStatistic()
     });
+
+    // 孵蛋egg
+    document.getElementById("btnHatch").addEventListener('click' ,function(){
+        document.getElementById("hatchFrame").src = "./pages/eggPage/index.html"
+    })
+    document.getElementById("btnBattle").addEventListener('click', function () {
+        chrome.extension.getBackgroundPage().console.log('battle')
+        document.getElementById("battleFrame").src = "./pages/fight/index.html"
+    })
 });
 
 firstInitPage();
