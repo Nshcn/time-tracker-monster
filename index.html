@@ -10,17 +10,6 @@
 </head>
 
 <body>
-    <!-- <svg class="height-0">
-      <filter id="dropShadow">
-         <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-         <feOffset dx="0" dy="1" />
-         <feMerge>
-            <feMergeNode />
-            <feMergeNode in="SourceGraphic" />
-         </feMerge>
-      </filter>
-   </svg>
--->
 <div class="container">
     <div class="title">
         <img src="./icons/dinosaur.png" alt="">
@@ -110,8 +99,11 @@ body{
     font-size: 10px;
     /* color: #fff; */
 }
+html .main{
+    background: #d9ffc9;
+}
 .main-nav .main-nav-active{
-    background: #fff;
+    background: #d9ffc9;
     color:black;
     box-shadow: 0px -0.9px 0px -0.1px grey;
 }
@@ -182,7 +174,13 @@ body{
     margin-right: 5px;
 }
 .chart-nav .btn-toggle-chart{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     flex: 1;
+}
+.chart-nav .btn-toggle-chart:hover{
+    cursor: pointer;
+    background: gray;
 }
 #chart-container{
     flex-grow: 0;

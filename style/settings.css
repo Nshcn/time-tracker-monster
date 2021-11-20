@@ -18,8 +18,9 @@ body {
 }
 
 .title {
-    font-size: 23px;
+    font-size: 30px;
     font-weight: 650;
+    font-family: fantasy;
 }
 
 .header {
@@ -73,7 +74,8 @@ label {
     pointer-events: none
 }
 .team-name{
-
+    font-weight: bold;
+    color: lightcoral;
 }
 
 .team-info{
@@ -93,6 +95,9 @@ label {
     border-radius: 10px;
     display: flex;
     flex-direction: row;
+}
+.team-info .team-member-info:hover{
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 20%);
 }
  .member-photo{
      margin: 10px;
@@ -317,7 +322,7 @@ input[type="button"][disabled] {
   .listbox{
       overflow-y: auto;
       width: 350px;
-      height: 120px;
+      height: 100px;
       background: floralwhite;
       /* padding: 3px; */
       /* padding: 3px 5px 3px 5px; */
@@ -531,4 +536,8 @@ input[type="button"][disabled] {
     flex-wrap: wrap;
     width: 50vw;
     justify-content: space-around;
+}
+
+html,body{
+    background-color: antiquewhite;
 }
