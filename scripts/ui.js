@@ -392,7 +392,7 @@ class UI {
             top: (idx * 100) / 7 + 5 + '%',
             height: 100 / 7 - 10 + '%',
             axisLabel: {
-              interval: 2
+              interval: 1
             }
           });
           series.push({
