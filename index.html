@@ -37,13 +37,21 @@
         <div id="pageStatistics" class="active">
             <div id="statisticChart">
                 <div class="chart-nav">
-                    <div id="btnTodayStatistics" class="btn-toggle-chart">
+                    <div id="btnTodayStatistics" class="btn-toggle-chart chart-nav-active" >
                         <img src="./icons/clock.png" class="chart-type-img">
                         TODAY
                     </div>
                     <div id="btnAllStatistics" class="btn-toggle-chart">
                         <img src="./icons/calendar.png" class="chart-type-img">
                         ALL-TIME
+                    </div>
+                    <div id="btnCounter" class="btn-toggle-chart">
+                        <img src="./icons/visits.png" class="chart-type-img">
+                        Visits
+                    </div>
+                    <div id="btnDistribution" class="btn-toggle-chart">
+                        <img src="./icons/distribution.png" class="chart-type-img">
+                        Distribution
                     </div>
                 </div>
                 <div id="chart-container" style="width:100%;height:300px"></div>
@@ -67,6 +75,7 @@
 <script src="scripts/common.js"></script>
 <script src="scripts/ui.js"></script>
 <script src="scripts/webact.js"></script>
+<script src="scripts/timeInterval.js"></script>
 
 <style>
 html{
@@ -81,7 +90,7 @@ body{
 }
 .container{
     width: 500px;
-    height:500px;
+    height:550px;
     padding-right: 10px;
 }
 .container .title{
@@ -178,12 +187,19 @@ html .main{
     border-top-right-radius: 10px;
     flex: 1;
 }
-.chart-nav .btn-toggle-chart:hover{
+/* .chart-nav .btn-toggle-chart:hover{
     cursor: pointer;
     background: gray;
+} */
+
+.chart-nav .chart-nav-active{
+    background-color: #EFF9FA;
+    color: black;
 }
 #chart-container{
     flex-grow: 0;
+    background: #EFF9FA;
+    border-radius: 10px;
 }
 .main .active{
     display: block !important;

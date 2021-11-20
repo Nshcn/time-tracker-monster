@@ -1,5 +1,5 @@
 'use strict';
-
+let timeInterval;
 class UI {
     getTableOfSite() {
         return document.getElementById('statisticTable');
@@ -41,6 +41,13 @@ class UI {
         }
 
         this.getTableOfSite().appendChild(p);
+
+        // 获取interval
+        storage.getValue(STORAGE_TIMEINTERVAL_LIST, function (items) {
+            if (items != undefined) {
+                timeInterval = items;
+            }
+        });
     }
 
     addLineToTableOfSite(tab, currentTab, summaryTime, typeOfList, counter, blockName) {
@@ -200,17 +207,49 @@ class UI {
     showTodayStatistic() {
         currentTypeOfList = TypeListEnum.ToDay;
         let data = [];
+        let domains = [];
+        let timeOfDomain = [];
         tabsFromBackground.forEach(item=>{
             var day = item.days.find(x => x.date == todayLocalDate());
             if (day !== undefined) {
-                data.push({
-                    name: item.url,
-                    value:day.summary
-                })
+                domains.push(item.url);
+                timeOfDomain.push(day.summary);
             }
         })
         this.clearUI();
-        this.drawRingChart(data);
+        // this.drawRingChart(data);
+        var chartDom = document.getElementById('chart-container');
+        var myChart = echarts.init(chartDom);
+        myChart.clear();
+        var option;
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'shadow'
+                }
+              },
+        xAxis: {
+            type: 'category',
+            data:  domains,
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+            data:timeOfDomain,
+            type: 'bar',
+            showBackground: true,
+            backgroundStyle: {
+                color: 'rgba(180, 180, 180, 0.2)'
+            }
+            }
+        ]
+        };
+
+        option && myChart.setOption(option);
+
         this.showTable();
     }
     showTable() {
@@ -275,104 +314,160 @@ class UI {
         });
         this.clearUI();
         this.drawRingChart(ringData);
-        // let barData = tabsFromBackground.map(item => {
-        //     item
-        // });
-        // this.drawBarChart();
         this.showTable();
     }
-    drawBarChart(data) {
-        return;
+    showCounterStatistic() {
+        let yAxis = []
+        let counter = [];
+        let tempTab = tabsFromBackground.sort(function (a, b) {
+            return b.counter - a.counter;
+        });
+        tempTab = tempTab.length > 10 ? tempTab.slice(0, 9) : tempTab;
+        chrome.extension.getBackgroundPage().console.log(tempTab)
+        tempTab.forEach(item => {
+            yAxis.push(item.url);
+            counter.push(item.counter);
+        })
+        this.clearUI();
+        this.drawBarChart(yAxis, counter);
+        this.showTable();
+    }
+    formatInterval(arrOfInterval) {
+        return arrOfInterval.map(item => {
+            return item.split('-')[0].split(':')[0];
+        })
+    }
+    showDistributionStatistic() {
+        let intervalList = [];
+        timeInterval.forEach(item => {
+            let intervalInHour = Array.from(new Set(this.formatInterval(item.intervals)));
+            intervalList.push({
+                domain: item.domain,
+                interval: intervalInHour
+            })
+        })
+        chrome.extension.getBackgroundPage().console.log(intervalList);
+        let data = [];
+        let domains = [];
+        intervalList.slice(0,6).forEach((item, index) => {
+            domains.push(item.domain);
+            item.interval.forEach(time => {
+                data.push([index, parseInt(time), 3]);
+            })
+        })
+        this.drawDistributionChart(domains,data);
+    }
+
+    drawDistributionChart(domains, data) {
+        chrome.extension.getBackgroundPage().console.log(data);
         var chartDom = document.getElementById('chart-container');
         var myChart = echarts.init(chartDom);
+        myChart.clear();
         var option;
         
         // prettier-ignore
-        // let dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
-        // prettier-ignore
+        const hours = [
+            '12a', '1a', '2a', '3a', '4a', '5a', '6a',
+            '7a', '8a', '9a', '10a', '11a',
+            '12p', '1p', '2p', '3p', '4p', '5p',
+            '6p', '7p', '8p', '9p', '10p', '11p'
+        ];
+        var title = [];
+        const singleAxis = [];
+        const series = [];
+        domains.forEach(function (domain, idx) {
+          title.push({
+            textBaseline: 'middle',
+            top: ((idx + 0.5) * 100) / 7 + '%',
+              text: domain,
+              textStyle:{
+                fontSize:12
+              }
+          });
+          singleAxis.push({
+            left: 155,
+            type: 'category',
+            boundaryGap: false,
+            data: hours,
+            top: (idx * 100) / 7 + 5 + '%',
+            height: 100 / 7 - 10 + '%',
+            axisLabel: {
+              interval: 2
+            }
+          });
+          series.push({
+            singleAxisIndex: idx,
+            coordinateSystem: 'singleAxis',
+            type: 'scatter',
+            data: [],
+            symbolSize: function (dataItem) {
+              return dataItem[1] * 4;
+            }
+          });
+        });
+        data.forEach(function (dataItem) {
+          series[dataItem[0]].data.push([dataItem[1], dataItem[2]]);
+        });
+        option = {
+          tooltip: {
+            position: 'top'
+          },
+          title: title,
+          singleAxis: singleAxis,
+          series: series
+        };
+        
+        option && myChart.setOption(option);
+    }
 
-        // let data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-        let yMax = 500;
-        let dataShadow = [];
-        for (let i = 0; i < data.length; i++) {
-          dataShadow.push(yMax);
-        }
+    drawBarChart(yAxis,counter) {
+        var chartDom = document.getElementById('chart-container');
+        var myChart = echarts.init(chartDom);
+        myChart.clear();
+
+        var option;
+        
         option = {
           title: {
-            text: '特性示例：渐变色 阴影 点击缩放',
-            subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
+            text: 'Ranking of visits'
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          legend: {},
+          grid: {
+            left: '0%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
           },
           xAxis: {
-            data: dataAxis,
-            axisLabel: {
-              inside: true,
-              color: '#fff'
-            },
-            axisTick: {
-              show: false
-            },
-            axisLine: {
-              show: false
-            },
-            z: 10
+            type: 'value',
+            boundaryGap: [0, 0.01]
           },
           yAxis: {
-            axisLine: {
-              show: false
-            },
-            axisTick: {
-              show: false
-            },
-            axisLabel: {
-              color: '#999'
-            }
+            type: 'category',
+            data: yAxis
           },
-          dataZoom: [
-            {
-              type: 'inside'
-            }
-          ],
           series: [
             {
+              name: '2021',
               type: 'bar',
-              showBackground: true,
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: '#83bff6' },
-                  { offset: 0.5, color: '#188df0' },
-                  { offset: 1, color: '#188df0' }
-                ])
-              },
-              emphasis: {
-                itemStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: '#2378f7' },
-                    { offset: 0.7, color: '#2378f7' },
-                    { offset: 1, color: '#83bff6' }
-                  ])
-                }
-              },
-              data: data
+              data: counter
             }
           ]
         };
-        // Enable data zoom when user click bar.
-        const zoomSize = 6;
-        myChart.on('click', function (params) {
-          console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
-          myChart.dispatchAction({
-            type: 'dataZoom',
-            startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-            endValue:
-              dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
-          });
-        });
         
         option && myChart.setOption(option);
     }
     drawRingChart(data) {
         var chartDom = document.getElementById('chart-container');
         var myChart = echarts.init(chartDom);
+        myChart.clear();
+
         var option;
         let targetTabs = [];
         if (currentTypeOfList == TypeListEnum.ToDay) {
@@ -380,39 +475,44 @@ class UI {
         } else {
             targetTabs = tabsFromBackground;
         }
+        
         option = {
             tooltip: {
                 trigger: 'item'
             },
             legend: {
-                show: targetTabs.length<8,
+                show:true,
                 orient: 'vertical',
                 x: 'right',
                 y: 'center',
                 itemGap: 2,
+                data: data.map(item => {
+                    return item.name
+                }).slice(0,10)
             },
             series: [
                 {
-                name: 'Access From',
+                name: '',
                 type: 'pie',
+                center:['30%','50%'],
                 radius: ['40%', '70%'],
                 avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
+                    itemStyle: {
+                    borderRadius: 5,
                     borderColor: '#fff',
-                    borderWidth: 2
+                    borderWidth: 1
                 },
                 label: {
                     show: false,
                     position: 'center'
                 },
-                emphasis: {
-                    label: {
-                    show: true,
-                    fontSize: '40',
-                    fontWeight: 'bold'
-                    }
-                },
+                // emphasis: {
+                //     label: {
+                //     show: true,
+                //     fontSize: '40',
+                //     fontWeight: 'bold'
+                //     }
+                // },
                 labelLine: {
                     show: false
                 },

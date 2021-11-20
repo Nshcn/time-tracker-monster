@@ -11,6 +11,7 @@ var setting_range_days;
 var setting_dark_mode;
 var restrictionList;
 
+
 function toggleActive(arr, self, className) {
     arr.forEach(ele => {
         if (ele == self) {
@@ -21,7 +22,7 @@ function toggleActive(arr, self, className) {
     });    
 }
 let navBtnArr = ['btnHatch', 'btnStatistics', 'btnBattle', 'btnSettings'];
-
+let chartBtnArr = ['btnTodayStatistics', 'btnAllStatistics', 'btnCounter', 'btnDistribution'];
 document.addEventListener('DOMContentLoaded', function () {
     // ui.setPreloader();
 
@@ -59,12 +60,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 数据统计页相关的nav
     document.getElementById('btnTodayStatistics').addEventListener('click', function () {
+        toggleActive(chartBtnArr,'btnTodayStatistics','chart-nav-active')
         currentTypeOfList = TypeListEnum.ToDay;
-        ui.showTodayStatistic()
+        ui.showTodayStatistic();
     });
     document.getElementById('btnAllStatistics').addEventListener('click', function () {
         currentTypeOfList = TypeListEnum.All;
-        ui.showAllStatistic()
+        toggleActive(chartBtnArr,'btnAllStatistics','chart-nav-active')
+        ui.showAllStatistic();
+    });
+    document.getElementById('btnCounter').addEventListener('click', function () {
+        toggleActive(chartBtnArr,'btnCounter','chart-nav-active')
+        ui.showCounterStatistic();
+    });
+    document.getElementById('btnDistribution').addEventListener('click', function () {
+        toggleActive(chartBtnArr,'btnDistribution','chart-nav-active')
+        ui.showDistributionStatistic();
     });
 
     // 孵蛋egg
@@ -101,10 +112,6 @@ window.addEventListener('click', function (e) {
 function fillEmptyBlock() {
     ui.removePreloader();
     ui.fillEmptyBlock('chart');
-}
-
-function getTimeIntervalList() {
-    storage.getValue(STORAGE_TIMEINTERVAL_LIST, drawTimeChart);
 }
 
 function getTotalTime(tabs) {

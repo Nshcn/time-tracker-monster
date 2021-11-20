@@ -9,7 +9,6 @@ var RangeForDays = {
     month2: 'month2',
     month3: 'month3'
 };
-
 var InactivityInterval = {
     second30: 30,
     second45: 45,
@@ -20,6 +19,7 @@ var InactivityInterval = {
     min20: 1200,
     min30: 1800
 };
+
 
 var TypeListEnum = {
     ToDay: 1,
